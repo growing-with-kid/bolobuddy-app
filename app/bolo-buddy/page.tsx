@@ -8,7 +8,6 @@ import { PapaKiAwaazSection } from '@/components/landing/PapaKiAwaazSection'
 import { FeatureCards } from '@/components/landing/FeatureCards'
 import { SampleStories } from '@/components/landing/SampleStories'
 import { Pricing } from '@/components/landing/Pricing'
-import { FounderCredit } from '@/components/landing/FounderCredit'
 import BoloFooter from '@/components/bolo-buddy/Footer'
 
 export default function BoloBuddyPage() {
@@ -31,7 +30,6 @@ export default function BoloBuddyPage() {
           <PapaKiAwaazSection />
           <FeatureCards />
           <Pricing freeCtaHref="/bolo-buddy/signup" premiumCtaHref={premiumCtaHref} />
-          <FounderCredit />
           <BoloFooter />
         </main>
       </div>
