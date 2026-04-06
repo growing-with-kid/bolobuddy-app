@@ -15,6 +15,7 @@ const SARVAM_API_KEY = process.env.SARVAM_API_KEY!
 const STORAGE_BUCKET = 'story-audio'
 const BATCH_SIZE = 3 // Process 3 stories at a time to avoid rate limits
 const RETRY_ATTEMPTS = 2 // Retry failed TTS calls once
+const SEED_BATCH = 'april-2026-v1'
 
 if (!SUPABASE_URL || !SERVICE_ROLE_KEY || !SARVAM_API_KEY) {
   throw new Error(
@@ -105,11 +106,12 @@ async function callSarvamAPI(text: string, languageCode: string): Promise<Buffer
       inputs: [text],
       target_language_code: languageCode,
       // Use the same naming and model as app-level TTS helper (lib/tts/sarvam.ts)
-      speaker: 'kavya',
+      speaker: 'roopa',
       model: 'bulbul:v3',
       pace: 0.85,
-      temperature: 0.55,
-      sample_rate: 24000,
+      temperature: 0.4,
+      speech_sample_rate: 22050,
+      enable_preprocessing: true,
     }),
   })
 
@@ -131,7 +133,7 @@ async function callSarvamAPI(text: string, languageCode: string): Promise<Buffer
 
 // ── Upload audio to Supabase Storage ─────────────────────────────────
 async function uploadAudio(audioBuffer: Buffer, slug: string): Promise<string> {
-  const filePath = `system/${slug}.wav`
+  const filePath = `system-stories/${SEED_BATCH}/${slug}.wav`
 
   const { error: uploadError } = await supabase.storage
     .from(STORAGE_BUCKET)
@@ -157,7 +159,7 @@ async function insertStoryRow(story: SystemStory, audioUrl: string, slug: string
     .from('stories')
     .select('id')
     .eq('is_system', true)
-    .eq('seed_batch', story.seed_batch)
+    .eq('seed_batch', SEED_BATCH)
     .ilike('title', story.title)
     .maybeSingle()
 
@@ -186,7 +188,7 @@ async function insertStoryRow(story: SystemStory, audioUrl: string, slug: string
     status: 'completed',
     audio_status: 'completed',
     is_system: true,
-    seed_batch: story.seed_batch,
+    seed_batch: SEED_BATCH,
     user_id: null,
     child_profile_id: null,
     // created_at defaults to NOW()
@@ -211,7 +213,7 @@ async function seedStory(story: SystemStory, index: number): Promise<void> {
       const audioBuffer = await generateTTS(story, attempt)
       console.log(`  [TTS] Done — ${audioBuffer.length} bytes`)
 
-      console.log(`  [Storage] Uploading to story-audio/system/${slug}.wav…`)
+      console.log(`  [Storage] Uploading to story-audio/system-stories/${SEED_BATCH}/${slug}.wav…`)
       const audioUrl = await uploadAudio(audioBuffer, slug)
       console.log(`  [Storage] Uploaded — ${audioUrl}`)
 
@@ -263,12 +265,16 @@ async function ensureBucketExists(): Promise<void> {
 async function main() {
   console.log('════════════════════════════════════════')
   console.log('  Bolo Buddy — System Story Seeder')
-  console.log(`  Batch: march-2026-v1`)
+  console.log(`  Batch: ${SEED_BATCH}`)
   console.log(`  Stories: ${STORIES_TO_SEED.length}`)
   console.log('════════════════════════════════════════')
 
   // Ensure storage bucket exists before we start seeding
-  await ensureBucketExists()
+  try {
+    await ensureBucketExists()
+  } catch (err) {
+    console.warn('Bucket check skipped — assuming bucket exists:', err)
+  }
 
   // Process in batches to respect Sarvam rate limits
   for (let i = 0; i < STORIES_TO_SEED.length; i += BATCH_SIZE) {

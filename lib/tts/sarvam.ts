@@ -208,11 +208,12 @@ async function synthesizeChunk(
   const body = {
     inputs: [chunk],
     target_language_code: params.language,
-    speaker: params.voice.toLowerCase(),
+    speaker: 'roopa',
     model: 'bulbul:v3',
     pace: 0.85,
-    temperature: 0.55,
-    sample_rate: 24000,
+    temperature: 0.4,
+    speech_sample_rate: 22050,
+    enable_preprocessing: true,
   }
 
   const res = await fetch(SARVAM_TTS_URL, {
