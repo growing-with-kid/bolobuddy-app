@@ -7,11 +7,6 @@ import { nanoid } from 'nanoid'
 import { createClient } from '@/lib/supabase/client'
 import BoloFooter from '@/components/bolo-buddy/Footer'
 
-const APP_URL =
-  typeof process !== 'undefined' && process.env.NEXT_PUBLIC_APP_URL
-    ? process.env.NEXT_PUBLIC_APP_URL.replace(/\/$/, '')
-    : ''
-
 export default function ReferralPage() {
   const router = useRouter()
   const [referralCode, setReferralCode] = useState<string | null>(null)
@@ -52,7 +47,8 @@ export default function ReferralPage() {
     return () => { cancelled = true }
   }, [router])
 
-  const referralUrl = referralCode && APP_URL ? `${APP_URL}/bolo-buddy/signup?ref=${encodeURIComponent(referralCode)}` : ''
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.bolobuddy.in'
+  const referralUrl = referralCode ? `${baseUrl}/bolo-buddy/signup?ref=${referralCode}` : ''
   const whatsappText = `Mere bacche ko Bolo Buddy bahut pasand hai 🌙 Tumhare bacche ke liye bhi free mein try karo: ${referralUrl}`
   const whatsappHref = `https://wa.me/?text=${encodeURIComponent(whatsappText)}`
 
