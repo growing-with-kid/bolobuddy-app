@@ -108,8 +108,8 @@ async function callSarvamAPI(text: string, languageCode: string): Promise<Buffer
       // Use the same naming and model as app-level TTS helper (lib/tts/sarvam.ts)
       speaker: 'roopa',
       model: 'bulbul:v3',
-      pace: 0.85,
-      temperature: 0.4,
+      pace: 0.75,
+      temperature: 0.3,
       speech_sample_rate: 22050,
       enable_preprocessing: true,
     }),
