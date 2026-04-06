@@ -262,7 +262,7 @@ async function ensureBucketExists(): Promise<void> {
   console.log(`  [Storage] Created bucket "${STORAGE_BUCKET}"`)
 }
 
-async function main() {
+export async function main() {
   console.log('════════════════════════════════════════')
   console.log('  Bolo Buddy — System Story Seeder')
   console.log(`  Batch: ${SEED_BATCH}`)
@@ -318,8 +318,7 @@ async function main() {
   }
 }
 
-main().catch(err => {
-  console.error('Fatal error:', err)
-  process.exit(1)
-})
+if (require.main === module) {
+  main().catch(console.error)
+}
 
