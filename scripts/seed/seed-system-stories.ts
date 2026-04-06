@@ -171,7 +171,12 @@ async function insertStoryRow(story: SystemStory, audioUrl: string, slug: string
     console.log(`  [DB] Already exists, updating audio_url: ${story.title}`)
     const { error } = await supabase
       .from('stories')
-      .update({ audio_url: audioUrl, status: 'completed', audio_status: 'completed' })
+      .update({
+        text_content: story.content.trim(),
+        audio_url: audioUrl,
+        status: 'completed',
+        audio_status: 'completed',
+      })
       .eq('id', existing.id)
 
     if (error) throw new Error(`DB update failed for ${story.title}: ${error.message}`)
