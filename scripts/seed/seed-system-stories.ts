@@ -316,10 +316,10 @@ export async function main() {
   if (FAILED_STORIES.length > 0) {
     console.log('\n  Failed stories:')
     FAILED_STORIES.forEach(f => console.log(`  ✗ ${f.title}: ${f.error}`))
-    process.exit(1)
+    throw new Error('Seeding failed')
   } else {
     console.log('\n  All stories seeded successfully ✓')
-    process.exit(0)
+    return
   }
 }
 
