@@ -107,12 +107,6 @@ export function Hero({ sampleHref, signupHref }: HeroProps) {
         </p>
         {sampleHref ? (
           <>
-            <p
-              className="text-sm font-medium mt-4 mb-2"
-              style={{ color: '#8A7B6F' }}
-            >
-              🌙 Trusted by 1,500+ Indian families
-            </p>
             <div
               className="mt-4 inline-block rounded-[100px] p-2"
             style={{

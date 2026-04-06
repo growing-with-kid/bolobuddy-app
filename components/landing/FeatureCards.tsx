@@ -2,21 +2,20 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState } from 'react'
 import { LanguagePills } from './LanguagePills'
 
 export function FeatureCards() {
-  const ages = [
-    { label: '3-4', selected: false },
-    { label: '5-6', selected: true },
-    { label: '7-9', selected: false },
-  ]
+  const ages = ['3-4', '5-6', '7-9']
   const moods = [
-    { icon: '🌙', label: 'Bedtime Calm', sub: 'Wind down gently', selected: true, iconClass: 'calm' as const, premium: false },
-    { icon: '⭐', label: 'Brave & Bold', sub: 'Courage stories', selected: false, iconClass: 'brave' as const, premium: false },
-    { icon: '💝', label: 'Kind Heart', sub: 'Sharing & caring', selected: false, iconClass: 'kind' as const, premium: false },
-    { icon: '🌿', label: 'Nature Tales', sub: 'Animals & outdoors', selected: false, iconClass: 'nature' as const, premium: false },
-    { icon: '🕉️', label: 'Mythology & Devotion', sub: 'Ramayan, Krishna & more', selected: false, iconClass: 'mythology' as const, premium: true },
+    { key: 'bedtime-calm', icon: '🌙', label: 'Bedtime Calm', sub: 'Wind down gently', iconClass: 'calm' as const, premium: false },
+    { key: 'brave-bold', icon: '⭐', label: 'Brave & Bold', sub: 'Courage stories', iconClass: 'brave' as const, premium: false },
+    { key: 'kind-heart', icon: '💝', label: 'Kind Heart', sub: 'Sharing & caring', iconClass: 'kind' as const, premium: false },
+    { key: 'nature-tales', icon: '🌿', label: 'Nature Tales', sub: 'Animals & outdoors', iconClass: 'nature' as const, premium: false },
+    { key: 'mythology-devotion', icon: '🕉️', label: 'Mythology & Devotion', sub: 'Ramayan, Krishna & more', iconClass: 'mythology' as const, premium: true },
   ]
+  const [selectedAge, setSelectedAge] = useState('5-6')
+  const [selectedMood, setSelectedMood] = useState('bedtime-calm')
   const cards = [
     {
       title: 'Apni awaaz record karo',
@@ -135,17 +134,19 @@ export function FeatureCards() {
               Child&apos;s Age
             </div>
             <div className="grid grid-cols-3 gap-2.5">
-              {ages.map(({ label, selected }) => (
-                <div
+              {ages.map((label) => (
+                <button
                   key={label}
+                  type="button"
+                  onClick={() => setSelectedAge(label)}
                   className={`rounded-xl border-2 py-3.5 text-center text-[15px] font-medium transition-all ${
-                    selected
+                    selectedAge === label
                       ? 'border-[#9B7EDE] bg-gradient-to-br from-[#9B7EDE] to-[#C77DFF] text-white shadow-[0_4px_12px_rgba(155,126,222,0.3)]'
                       : 'border-[#e5e5e5] bg-white text-[#666]'
                   }`}
                 >
                   {label}
-                </div>
+                </button>
               ))}
             </div>
           </div>
@@ -155,7 +156,7 @@ export function FeatureCards() {
               Tonight&apos;s Mood
             </div>
             <div className="grid grid-cols-2 gap-2">
-              {moods.map(({ icon, label, sub, selected, iconClass, premium }, index) => {
+              {moods.map(({ key, icon, label, sub, iconClass, premium }, index) => {
                 const cardColor =
                   iconClass === 'calm'
                     ? '#FF8C7E'
@@ -168,10 +169,12 @@ export function FeatureCards() {
                           : '#C4B5FD'
                 const isFullWidth = index === 4 // Mythology & Devotion
                 return (
-                  <div
+                  <button
                     key={label}
+                    type="button"
+                    onClick={() => setSelectedMood(key)}
                     className={`relative rounded-[12px] overflow-hidden aspect-square ${
-                      selected ? 'ring-2 ring-[#9B7EDE] ring-offset-1' : ''
+                      selectedMood === key ? 'ring-2 ring-[#9B7EDE] ring-offset-1' : ''
                     } ${isFullWidth ? 'col-span-2' : ''}`}
                   >
                     {/* Background colour */}
@@ -202,7 +205,7 @@ export function FeatureCards() {
                       </p>
                       <p className="text-white/80 text-[10px]">{sub}</p>
                     </div>
-                  </div>
+                  </button>
                 )
               })}
             </div>
@@ -211,7 +214,7 @@ export function FeatureCards() {
           <LanguagePills />
 
           <Link
-            href="/bolo-buddy/signup"
+            href={`/bolo-buddy/signup?age=${encodeURIComponent(selectedAge)}&mood=${encodeURIComponent(selectedMood)}`}
             className="block w-full rounded-xl bg-[#FF6B35] py-4 text-center text-base font-semibold text-white shadow-[0_4px_12px_rgba(255,107,53,0.3)] transition-all hover:bg-[#e55a25] hover:shadow-[0_6px_16px_rgba(255,107,53,0.4)] min-h-[56px] leading-[2.75rem]"
           >
             Try a free story →

@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 const socialLinks = [
   { emoji: '📸', label: 'Instagram', href: 'https://instagram.com/growingwithkid' },
-  { emoji: '💼', label: 'LinkedIn', href: 'https://linkedin.com/company/growingwithkid' },
+  { emoji: '💼', label: 'LinkedIn', href: 'https://www.linkedin.com/in/raghvendrasingh23/' },
   { emoji: '🐦', label: 'Twitter/X', href: 'https://twitter.com/growingwithkid' },
   { emoji: '💬', label: 'WhatsApp', href: 'https://wa.me/message/growingwithkid' },
 ]

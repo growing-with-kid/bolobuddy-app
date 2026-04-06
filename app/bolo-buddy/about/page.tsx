@@ -1,4 +1,5 @@
 import { Nunito, Inter, Lora } from 'next/font/google'
+import Image from 'next/image'
 import Navbar from '@/components/bolo-buddy/Navbar'
 import BoloFooter from '@/components/bolo-buddy/Footer'
 
@@ -244,14 +245,13 @@ export default function AboutPage() {
                 <span className="absolute top-5 left-0 right-0 text-center text-[10px] text-white/25 tracking-[8px]">
                   ✦  ✦  ✦
                 </span>
-                <div className="w-[120px] h-[120px] rounded-full bg-white/15 border-2 border-dashed border-white/40 flex flex-col items-center justify-center gap-1.5 mb-4">
-                  <span className="text-4xl">📸</span>
-                  <span className="text-[10px] font-semibold text-white/55 tracking-wide text-center leading-snug">
-                    Raghvendra
-                    <br />
-                    ki photo
-                  </span>
-                </div>
+                <Image
+                  src="/founder-photo.png"
+                  alt="Raghvendra Singh — Founder, Bolo Buddy"
+                  width={120}
+                  height={120}
+                  className="mb-4 rounded-full border-2 border-white/40 object-cover"
+                />
               </div>
               <div className="flex-1 py-9 px-6 sm:px-8 flex flex-col justify-center">
                 <p className={`${nunito.className} font-black text-[22px] text-[#7B2FBE] mb-0.5`}>
@@ -472,9 +472,13 @@ export default function AboutPage() {
             className="p-10"
             style={{ background: 'linear-gradient(135deg, #1a0a3c 0%, #2D1B6B 100%)' }}
           >
-            <div className="w-[72px] h-[72px] rounded-[20px] bg-gradient-to-br from-[#FF6B35] to-[#7B2FBE] flex items-center justify-center text-[32px] mb-5">
-              👨‍💻
-            </div>
+            <Image
+              src="/founder-photo.png"
+              alt="Raghvendra Singh — Founder, Bolo Buddy"
+              width={72}
+              height={72}
+              className="mb-5 rounded-[20px] object-cover"
+            />
             <p className={`${nunito.className} text-[22px] font-black text-white mb-1`}>Raghvendra</p>
             <p className="text-[13px] text-white/45 italic">Papa pehle, founder baad mein · Faridabad</p>
           </div>

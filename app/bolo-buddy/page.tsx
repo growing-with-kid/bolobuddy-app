@@ -23,9 +23,9 @@ export default function BoloBuddyPage() {
 
   return (
     <>
-      <div className="min-h-screen bg-[#FFF8F0] font-sans text-body-charcoal">
+      <div className="min-h-screen bg-[#FFF8F0] font-sans text-body-charcoal flex flex-col">
         <Navbar variant="light" pill />
-        <main className="pt-[104px]">
+        <main className="pt-[104px] flex-1">
           <Hero sampleHref="/bolo-buddy/sample" signupHref="/bolo-buddy/signup" />
           <SampleStories />
           <PapaKiAwaazSection />
