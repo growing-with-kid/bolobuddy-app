@@ -10,7 +10,7 @@ export type StoryMood =
   | 'brave'         // Courage & Discovery
   | 'magical';      // Nature & Magic
 
-export type StoryLanguage = 'hindi' | 'hinglish' | 'english' | 'tamil';
+export type StoryLanguage = 'hindi' | 'hinglish' | 'english' | 'tamil' | 'telugu';
 
 export type AgeGroup = '2-4' | '5-6' | '7-8' | '9-10';
 
@@ -31,10 +31,10 @@ export type ApiMood = 'bedtime' | 'kindness' | 'courage' | 'nature' | 'mythology
 // ─────────────────────────────────────────────
 
 export const VOICE_MAP: Record<StoryMood, string> = {
-  sleepy:  'kavya',   // Soft, soothing — Bedtime stories
-  kind:    'ishita',  // Warm, motherly — Kindness + Nature
-  magical: 'ishita',  // Warm, motherly — Nature + Magic
-  brave:   'priya',   // Energetic — Courage + Discovery
+  sleepy:  'shreya', // Soft, soothing — Bedtime stories
+  kind:    'shreya', // Warm, motherly — Kindness + Nature
+  magical: 'shreya', // Warm, motherly — Nature + Magic
+  brave:   'aarav',  // Slightly energetic — Courage + Discovery
 };
 
 // ─────────────────────────────────────────────
@@ -162,6 +162,11 @@ const LANGUAGE_CONFIG: Record<StoryLanguage, {
     script: 'Tamil script',
     nameUsage: 'Use the child\'s name naturally in Tamil sentence flow.',
   },
+  telugu: {
+    instruction: `Write entirely in Telugu using Telugu script. Natural spoken Telugu — the kind an avva would use at bedtime. Warm, conversational, and simple for children.`,
+    script: 'Telugu script',
+    nameUsage: 'Use the child\'s name naturally in Telugu sentence flow.',
+  },
 };
 
 // ─────────────────────────────────────────────
@@ -194,6 +199,12 @@ function getRefrain(childName: string, mood: StoryMood, language: StoryLanguage)
       kind:    `${childName}, நீ மிகவும் அன்பானவன்.`,
       brave:   `${childName} மிகவும் தைரியசாலி.`,
       magical: `பாரு, ${childName}... ஏதோ அதிசயம் நடக்கிறது.`,
+    },
+    telugu: {
+      sleepy: `నిద్రపో, ${childName}... రాత్రి వచ్చేసింది.`,
+      kind: `${childName}, నువ్వు చాలా ముద్దుగా ఉన్నావు.`,
+      brave: `${childName} చాలా ధైర్యంగా ఉంటాడు.`,
+      magical: `చూడమ్మా, ${childName}... చిన్న మాయ జరుగుతోంది.`,
     },
   };
 
@@ -331,6 +342,7 @@ export function apiParamsToStoryConfig(params: {
     : params.childAge <= 6 ? '5-6'
     : params.childAge <= 8 ? '7-8'
     : '9-10';
+  // nature + mythology → magical (same prompts/voice); split mythology before scale if beta wants distinct tone.
   const mood: StoryMood =
     params.mood === 'bedtime' ? 'sleepy'
     : params.mood === 'kindness' ? 'kind'

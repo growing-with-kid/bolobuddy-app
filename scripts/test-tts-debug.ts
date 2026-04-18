@@ -5,12 +5,14 @@
  *   npx tsx scripts/test-tts-debug.ts
  *
  * Loads .env.local. Requires: NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, SARVAM_API_KEY.
+ *
+ * Optional: TTS_SPEAKER=Shreya|Shubh|Aarav
  */
 
 import { createClient } from '@supabase/supabase-js'
 import { readFileSync, existsSync } from 'fs'
 import { resolve } from 'path'
-import { generateStoryAudio } from '../lib/tts/sarvam'
+import { generateStoryAudio, type TTSVoice } from '../lib/tts/sarvam'
 
 const STORY_ID = '859ef956-fcab-4640-af1c-e691bd768834'
 
@@ -33,6 +35,14 @@ function loadEnvLocal() {
 }
 
 loadEnvLocal()
+
+function parseVoice(): TTSVoice {
+  const raw = (process.env.TTS_SPEAKER ?? 'Shreya').trim()
+  const n = raw.toLowerCase()
+  if (n === 'shubh') return 'Shubh'
+  if (n === 'aarav') return 'Aarav'
+  return 'Shreya'
+}
 
 async function main() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim()
@@ -69,7 +79,7 @@ async function main() {
       {
         text,
         language: 'hi-IN',
-        voice: 'Kavya',
+        voice: parseVoice(),
         storyMood: 'bedtime',
         storyId: STORY_ID,
       },
