@@ -263,19 +263,21 @@ export async function POST(request: Request) {
 
 // Upload audio buffer to Supabase stories bucket
 async function uploadAudioBuffer(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  supabase: any,
   storyId: string,
   buffer: Buffer,
   contentType: string
 ): Promise<string> {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim()
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim()
+  if (!url || !serviceKey) throw new Error('Supabase env vars missing for audio upload')
+  const client = createSupabaseClient(url, serviceKey, { auth: { persistSession: false } })
   const ext = contentType === 'audio/mpeg' ? 'mp3' : 'wav'
   const path = `${storyId}/audio.${ext}`
-  const { error } = await supabase.storage
+  const { error } = await client.storage
     .from('stories')
     .upload(path, buffer, { contentType, upsert: true })
   if (error) throw new Error(`Storage upload failed: ${error.message}`)
-  const { data } = supabase.storage.from('stories').getPublicUrl(path)
+  const { data } = client.storage.from('stories').getPublicUrl(path)
   return data.publicUrl
 }
 
@@ -298,7 +300,6 @@ function injectTTSPauses(text: string): string {
       console.log('[story-generate] Using ElevenLabs TTS for language:', params.language)
       const mp3Buffer = await generateElevenLabsAudio(ttsText, params.language)
       audioUrl = await uploadAudioBuffer(
-        supabase as unknown as ReturnType<typeof createSupabaseClient>,
         storyId,
         mp3Buffer,
         'audio/mpeg'
