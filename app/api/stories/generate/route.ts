@@ -263,7 +263,8 @@ export async function POST(request: Request) {
 
 // Upload audio buffer to Supabase stories bucket
 async function uploadAudioBuffer(
-  supabase: ReturnType<typeof createSupabaseClient>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  supabase: any,
   storyId: string,
   buffer: Buffer,
   contentType: string
@@ -297,7 +298,7 @@ function injectTTSPauses(text: string): string {
       console.log('[story-generate] Using ElevenLabs TTS for language:', params.language)
       const mp3Buffer = await generateElevenLabsAudio(ttsText, params.language)
       audioUrl = await uploadAudioBuffer(
-        supabase as ReturnType<typeof createSupabaseClient>,
+        supabase as unknown as ReturnType<typeof createSupabaseClient>,
         storyId,
         mp3Buffer,
         'audio/mpeg'
