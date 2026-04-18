@@ -57,7 +57,7 @@ const MOOD_CONFIG: Record<StoryMood, {
       'a grandmother\'s room with a soft lantern',
     ],
     values: ['rest', 'peace', 'safety', 'warmth', 'home'],
-    pace: 'very slow — like a lullaby. Each sentence should invite sleep.',
+    pace: 'very slow — like a lullaby. Each sentence should invite sleep. Write each sentence on its own line. Use । । between thoughts for pauses. Keep sentences under 10 words.',
   },
   kind: {
     theme: 'Kindness, friendship, sharing, and caring for others',

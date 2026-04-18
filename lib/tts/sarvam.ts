@@ -114,8 +114,8 @@ export interface SarvamTTSChunkParams {
   voice: TTSVoice
 }
 
-const DEFAULT_PACE = 0.85
-const DEFAULT_TEMPERATURE = 0.4
+const DEFAULT_PACE = 0.65
+const DEFAULT_TEMPERATURE = 0.85
 const DEFAULT_SAMPLE_RATE = 22050
 
 /** Payload for `POST https://api.sarvam.ai/text-to-speech` (Bulbul v3). */
