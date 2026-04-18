@@ -273,11 +273,16 @@ async function uploadAudioBuffer(
   const client = createSupabaseClient(url, serviceKey, { auth: { persistSession: false } })
   const ext = contentType === 'audio/mpeg' ? 'mp3' : 'wav'
   const path = `${storyId}/audio.${ext}`
+  console.log('[uploadAudioBuffer] uploading to path:', path, 'size:', buffer.length, 'contentType:', contentType)
   const { error } = await client.storage
     .from('stories')
     .upload(path, buffer, { contentType, upsert: true })
-  if (error) throw new Error(`Storage upload failed: ${error.message}`)
+  if (error) {
+    console.error('[uploadAudioBuffer] upload error:', error.message, error)
+    throw new Error(`Storage upload failed: ${error.message}`)
+  }
   const { data } = client.storage.from('stories').getPublicUrl(path)
+  console.log('[uploadAudioBuffer] success, url:', data.publicUrl)
   return data.publicUrl
 }
 
