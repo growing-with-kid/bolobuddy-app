@@ -256,6 +256,16 @@ export async function POST(request: Request) {
   const moodVoiceKey = VOICE_MAP[config.mood]
   const voiceKey = resolveSarvamSpeaker(params.speaker, moodVoiceKey)
 
+
+// Inject TTS breathing pauses between sentences for warmer narration
+function injectTTSPauses(text: string): string {
+  return text
+    .split(/\n+/)
+    .map(line => line.trim())
+    .filter(Boolean)
+    .join('\n। ।\n')
+}
+
   let audioUrl: string | null = null
   let audioStatus: 'completed' | 'pending' = 'completed'
 
@@ -263,7 +273,7 @@ export async function POST(request: Request) {
     // Pass service-role supabase so storage upload succeeds (RLS); otherwise upload fails and audio_url stays null
     audioUrl = await generateStoryAudio(
       {
-        text: textContent,
+        text: injectTTSPauses(textContent),
         language: languageToTTS(params.language),
         voice: voiceToTTS(voiceKey),
         storyMood: params.mood as TTSStoryMood,
