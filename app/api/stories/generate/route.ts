@@ -319,9 +319,9 @@ function injectTTSPauses(text: string): string {
       )
     }
   } catch (ttsErr) {
-    console.warn(
-      '[story-generate] TTS or storage failed; returning story without audioUrl:',
-      ttsErr instanceof Error ? ttsErr.message : ttsErr
+    console.error(
+      '[story-generate] TTS or storage failed — FULL ERROR:',
+      ttsErr instanceof Error ? ttsErr.stack : String(ttsErr)
     )
     if (
       ttsErr instanceof SarvamConfigError ||
