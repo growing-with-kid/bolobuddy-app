@@ -5,7 +5,7 @@ const SARVAM_TTS_URL = 'https://api.sarvam.ai/text-to-speech'
 const SARVAM_BULBUL_URL = 'https://api.sarvam.ai/bulbul'
 
 /** Sarvam recommends staying under ~2500 chars per request; we use 2000 for headroom. */
-export const SARVAM_MAX_CHUNK_CHARS = 2000
+export const SARVAM_MAX_CHUNK_CHARS = 500
 
 const MAX_CHUNK_CHARS = SARVAM_MAX_CHUNK_CHARS
 
