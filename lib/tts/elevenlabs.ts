@@ -67,5 +67,12 @@ export async function generateElevenLabsAudio(
   }
 
   const arrayBuffer = await response.arrayBuffer()
-  return Buffer.from(arrayBuffer)
+  const buffer = Buffer.from(arrayBuffer)
+  console.log('[elevenlabs] audio buffer size:', buffer.length, 'bytes')
+  if (buffer.length < 1000) {
+    const preview = buffer.toString('utf8', 0, Math.min(200, buffer.length))
+    console.error('[elevenlabs] suspiciously small buffer, content:', preview)
+    throw new Error(`ElevenLabs returned invalid audio: only ${buffer.length} bytes`)
+  }
+  return buffer
 }
