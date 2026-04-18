@@ -15,6 +15,10 @@ import {
   type StoryMood as TTSStoryMood,
 } from '@/lib/tts/sarvam'
 import { resolveSarvamSpeaker } from '@/lib/tts/voice-selector'
+import {
+  generateElevenLabsAudio,
+  isElevenLabsLanguage,
+} from '@/lib/tts/elevenlabs'
 
 const FREE_STORIES_PER_MONTH = 3
 const CLAUDE_MODEL = 'claude-sonnet-4-6'
@@ -257,6 +261,23 @@ export async function POST(request: Request) {
   const voiceKey = resolveSarvamSpeaker(params.speaker, moodVoiceKey)
 
 
+// Upload audio buffer to Supabase stories bucket
+async function uploadAudioBuffer(
+  supabase: ReturnType<typeof createSupabaseClient>,
+  storyId: string,
+  buffer: Buffer,
+  contentType: string
+): Promise<string> {
+  const ext = contentType === 'audio/mpeg' ? 'mp3' : 'wav'
+  const path = `${storyId}/audio.${ext}`
+  const { error } = await supabase.storage
+    .from('stories')
+    .upload(path, buffer, { contentType, upsert: true })
+  if (error) throw new Error(`Storage upload failed: ${error.message}`)
+  const { data } = supabase.storage.from('stories').getPublicUrl(path)
+  return data.publicUrl
+}
+
 // Inject TTS breathing pauses at paragraph breaks for warmer narration
 function injectTTSPauses(text: string): string {
   return text
@@ -270,17 +291,31 @@ function injectTTSPauses(text: string): string {
   let audioStatus: 'completed' | 'pending' = 'completed'
 
   try {
-    // Pass service-role supabase so storage upload succeeds (RLS); otherwise upload fails and audio_url stays null
-    audioUrl = await generateStoryAudio(
-      {
-        text: injectTTSPauses(textContent),
-        language: languageToTTS(params.language),
-        voice: voiceToTTS(voiceKey),
-        storyMood: params.mood as TTSStoryMood,
+    const ttsText = injectTTSPauses(textContent)
+    if (isElevenLabsLanguage(params.language)) {
+      // ElevenLabs: primary TTS for Hindi, English, Tamil, Hinglish
+      console.log('[story-generate] Using ElevenLabs TTS for language:', params.language)
+      const mp3Buffer = await generateElevenLabsAudio(ttsText, params.language)
+      audioUrl = await uploadAudioBuffer(
+        supabase as ReturnType<typeof createSupabaseClient>,
         storyId,
-      },
-      supabase as Parameters<typeof generateStoryAudio>[1]
-    )
+        mp3Buffer,
+        'audio/mpeg'
+      )
+    } else {
+      // Sarvam: fallback for Telugu + non-ElevenLabs languages
+      console.log('[story-generate] Using Sarvam TTS for language:', params.language)
+      audioUrl = await generateStoryAudio(
+        {
+          text: ttsText,
+          language: languageToTTS(params.language),
+          voice: voiceToTTS(voiceKey),
+          storyMood: params.mood as TTSStoryMood,
+          storyId,
+        },
+        supabase as Parameters<typeof generateStoryAudio>[1]
+      )
+    }
   } catch (ttsErr) {
     console.warn(
       '[story-generate] TTS or storage failed; returning story without audioUrl:',
