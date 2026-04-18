@@ -257,11 +257,11 @@ export async function POST(request: Request) {
   const voiceKey = resolveSarvamSpeaker(params.speaker, moodVoiceKey)
 
 
-// Inject TTS breathing pauses between sentences for warmer narration
+// Inject TTS breathing pauses at paragraph breaks for warmer narration
 function injectTTSPauses(text: string): string {
   return text
-    .split(/\n+/)
-    .map(line => line.trim())
+    .split(/\n\n+/)
+    .map(para => para.trim())
     .filter(Boolean)
     .join('\n। ।\n')
 }

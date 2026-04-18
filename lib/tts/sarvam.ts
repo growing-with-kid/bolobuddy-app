@@ -114,7 +114,7 @@ export interface SarvamTTSChunkParams {
   voice: TTSVoice
 }
 
-const DEFAULT_PACE = 0.65
+const DEFAULT_PACE = 0.75
 const DEFAULT_TEMPERATURE = 0.85
 const DEFAULT_SAMPLE_RATE = 22050
 
