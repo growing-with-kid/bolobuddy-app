@@ -7,6 +7,12 @@ import RecordPlayWrapper from '../RecordPlayWrapper'
 import SaveStoryButton from '../SaveStoryButton'
 import ShareStoryButton from '@/components/bolo-buddy/ShareStoryButton'
 import UpgradeModal from '@/components/bolo-buddy/UpgradeModal'
+import StoryOutro from '@/components/bolo-buddy/StoryOutro'
+import {
+  getSessionStoriesCompleted,
+  hasGwkCardBeenShown,
+  incrementSessionStoriesCompleted,
+} from '@/lib/bolo-buddy/session-story'
 
 function isUUID(value: string) {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value)
@@ -65,6 +71,19 @@ export default function StoryPlayContent({
   const [downloading, setDownloading] = useState(false)
   const [downloadError, setDownloadError] = useState<string | null>(null)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
+  const [storyEnded, setStoryEnded] = useState(false)
+  const [storiesCompleted, setStoriesCompleted] = useState(0)
+
+  useEffect(() => {
+    setStoriesCompleted(getSessionStoriesCompleted())
+  }, [])
+
+  function handleStoryEnded() {
+    if (!isReplay) {
+      setStoriesCompleted(incrementSessionStoriesCompleted())
+    }
+    setStoryEnded(true)
+  }
 
   useEffect(() => {
     if (!isUUID(id)) return
@@ -203,6 +222,7 @@ export default function StoryPlayContent({
             mood={mood}
             src={audioSrc}
             isReplay={isReplay}
+            onEnded={handleStoryEnded}
           />
         </div>
 
@@ -211,6 +231,7 @@ export default function StoryPlayContent({
             <p key={i}>{para}</p>
           ))}
         </div>
+
 
         <div className="mt-10 flex flex-wrap items-start gap-3">
           <SaveStoryButton
@@ -257,6 +278,13 @@ export default function StoryPlayContent({
             )}
           </span>
         </div>
+
+        {storyEnded && (
+          <StoryOutro
+            showGwkCard={storiesCompleted >= 3 && !hasGwkCardBeenShown()}
+            mood={mood}
+          />
+        )}
 
         <section className="mt-10 rounded-2xl border border-gray-100 bg-gray-50 p-5">
           <h2 className="text-sm font-semibold text-gray-900">Parent Summary</h2>

@@ -23,9 +23,18 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.bolobuddy.in',
+  ),
   title: 'Growing With Kid | Screen-Light Parenting for Indian Families',
   description:
-    'Screen-light parenting for Indian families — hands-on activities, analog play, and audio bedtime stories with Bolo Buddy. Less screen, more stories.',
+    'Screen-light parenting for Indian families — bedtime routines, Memory Library activities, Dadi ki kahaniyaan prompts, and audio stories with Bolo Buddy.',
+  keywords: [
+    'bedtime routine Indian working parents',
+    'Hinglish bedtime story ideas',
+    'screen-light parenting India',
+    'Growing With Kid',
+  ],
 };
 
 export default function RootLayout({
