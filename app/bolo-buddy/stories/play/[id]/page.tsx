@@ -18,7 +18,10 @@ export default async function StoryPlayPage({
   const sp = await searchParams
   const language = (typeof sp.language === 'string' ? sp.language : 'en') || 'en'
   const mood = (typeof sp.mood === 'string' ? sp.mood : 'sleepy') || 'sleepy'
+  const gate = (typeof sp.gate === 'string' ? sp.gate : '') || ''
   const isReplay = sp.replay === '1'
+  const razorpayLink =
+    process.env.BOLO_RAZORPAY_LINK?.trim() || 'https://rzp.io/l/bolo-family-plan'
 
   const [savedStory, savedCount, childProfiles, subscription] = await Promise.all([
     getSavedStoryByStoryId(id),
@@ -43,6 +46,8 @@ export default async function StoryPlayPage({
       initialSavedStory={savedStory}
       initialSavedCount={savedCount}
       isPremium={subscription.isPremium}
+      showLastFreeGate={gate === 'last-free'}
+      razorpayLink={razorpayLink}
     />
   )
 }

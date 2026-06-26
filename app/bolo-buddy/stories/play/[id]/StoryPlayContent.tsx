@@ -8,6 +8,7 @@ import SaveStoryButton from '../SaveStoryButton'
 import ShareStoryButton from '@/components/bolo-buddy/ShareStoryButton'
 import UpgradeModal from '@/components/bolo-buddy/UpgradeModal'
 import StoryOutro from '@/components/bolo-buddy/StoryOutro'
+import StoryGate from '@/components/bolo/StoryGate'
 import {
   getSessionStoriesCompleted,
   hasGwkCardBeenShown,
@@ -53,6 +54,8 @@ type Props = {
   initialSavedStory: { audio_url?: string | null } | null
   initialSavedCount: number
   isPremium: boolean
+  showLastFreeGate?: boolean
+  razorpayLink?: string
 }
 
 export default function StoryPlayContent({
@@ -64,6 +67,8 @@ export default function StoryPlayContent({
   initialSavedStory,
   initialSavedCount,
   isPremium,
+  showLastFreeGate = false,
+  razorpayLink = 'https://rzp.io/l/bolo-family-plan',
 }: Props) {
   const [story, setStory] = useState<StoryRow | null>(null)
   const [loading, setLoading] = useState(isUUID(id))
@@ -278,6 +283,10 @@ export default function StoryPlayContent({
             )}
           </span>
         </div>
+
+        {showLastFreeGate && !isPremium && (
+          <StoryGate mode="last-free" razorpayLink={razorpayLink} />
+        )}
 
         {storyEnded && (
           <StoryOutro

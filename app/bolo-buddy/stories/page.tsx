@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { getStoriesUsedThisMonth } from '@/app/bolo-buddy/actions'
-import UpgradeModal from '@/components/bolo-buddy/UpgradeModal'
+import StoryGate from '@/components/bolo/StoryGate'
 
 type ChildProfile = { id: string; name: string; age_group: string }
 
@@ -42,6 +42,7 @@ export default function StoriesPage() {
   const [error, setError] = useState<string | null>(null)
   const [authChecked, setAuthChecked] = useState(false)
   const [usage, setUsage] = useState<UsageState>(null)
+  const [gateRazorpayLink, setGateRazorpayLink] = useState('https://rzp.io/l/bolo-family-plan')
 
   useEffect(() => {
     async function load() {
@@ -78,12 +79,6 @@ export default function StoriesPage() {
     const profile = profiles.find((p) => p.id === selectedProfileId)
     if (!profile) return
 
-    // BUG-03: Pre-check free limit so paywall shows without API round trip
-    if (usage && !usage.isPremium && usage.storiesUsed >= usage.limit) {
-      setError('free_limit')
-      return
-    }
-
     const supabase = createClient()
     const { data: { session } } = await supabase.auth.getSession()
     if (!session?.user) {
@@ -112,14 +107,19 @@ export default function StoriesPage() {
       const data = await res.json()
       if (!res.ok) {
         const isFreeLimit =
-          res.status === 429 ||
-          (res.status === 403 && data?.error?.toLowerCase?.().includes('limit'))
+          res.status === 403 &&
+          (data?.code === 'LIMIT_REACHED' ||
+            data?.error?.toLowerCase?.().includes('limit'))
+        if (typeof data?.razorpayLink === 'string' && data.razorpayLink) {
+          setGateRazorpayLink(data.razorpayLink)
+        }
         setError(isFreeLimit ? 'free_limit' : (data?.error ?? 'Something went wrong'))
         return
       }
       const storyId = data.storyId
       if (storyId) {
-        router.push(`/bolo-buddy/stories/generating?storyId=${storyId}&language=${encodeURIComponent(language)}&mood=${encodeURIComponent(mood)}`)
+        const gateQuery = data?.isLastFree ? '&gate=last-free' : ''
+        router.push(`/bolo-buddy/stories/generating?storyId=${storyId}&language=${encodeURIComponent(language)}&mood=${encodeURIComponent(mood)}${gateQuery}`)
       } else {
         setError('No story ID returned')
       }
@@ -161,15 +161,9 @@ export default function StoriesPage() {
             aria-live="polite"
           >
             {usage.storiesUsed < usage.limit ? (
-              usage.limit - usage.storiesUsed === 1 ? (
-                <p className="text-sm font-medium text-amber-800">
-                  Last free story this month!
-                </p>
-              ) : (
-                <p className="text-sm text-amber-800">
-                  {usage.limit - usage.storiesUsed} of {usage.limit} free stories left this month
-                </p>
-              )
+              <p className="text-sm text-amber-800">
+                {usage.limit - usage.storiesUsed} of {usage.limit} free stories left this month
+              </p>
             ) : (
               <p className="text-sm font-medium text-amber-900">
                 No stories left this month. Upgrade to continue.
@@ -184,6 +178,12 @@ export default function StoriesPage() {
           </p>
         ) : (
           <>
+            {error === 'free_limit' ? (
+              <div className="mt-6">
+                <StoryGate mode="limit-reached" razorpayLink={gateRazorpayLink} />
+              </div>
+            ) : (
+              <>
             {profiles.length >= 2 && (
               <div
                 className="mt-6 flex gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
@@ -288,6 +288,8 @@ export default function StoriesPage() {
                 "Aaj raat ki Kahani Shuru Karo"
               )}
             </button>
+              </>
+            )}
           </>
         )}
 
@@ -295,10 +297,6 @@ export default function StoriesPage() {
           Story generation powered by AI. Your selections shape the story.
         </p>
       </div>
-
-      {error === 'free_limit' && (
-        <UpgradeModal onClose={() => setError(null)} />
-      )}
     </div>
   )
 }
