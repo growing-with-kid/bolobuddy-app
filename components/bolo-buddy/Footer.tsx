@@ -9,9 +9,9 @@ const socialLinks = [
 ]
 
 const footerNavLinks = [
-  { label: 'Features', href: '/bolo-buddy#features' },
-  { label: 'Pricing', href: '/bolo-buddy#pricing' },
-  { label: 'About', href: '/bolo-buddy/about' },
+  { label: 'What Bolo Does', href: '/bolo-buddy#features' },
+  { label: 'Plans', href: '/bolo-buddy#pricing' },
+  { label: 'Our Story', href: '/bolo-buddy/about' },
   { label: 'Papa Ki Awaaz', href: '/bolo-buddy/papa-ki-awaaz' },
   { label: 'Terms', href: '/bolo-buddy/terms' },
   { label: 'Privacy', href: '/bolo-buddy/privacy' },
