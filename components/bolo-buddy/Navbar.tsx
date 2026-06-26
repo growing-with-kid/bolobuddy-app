@@ -21,14 +21,25 @@ function BrandLockup({ logoColor }: { logoColor: string }) {
       <Link href="/bolo-buddy" className="font-bold text-base">
         🌙 Bolo Buddy
       </Link>
-      <a
-        href="https://www.growingwithkid.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="hidden sm:block text-[10px] font-medium tracking-[0.3px] text-[#8A7B6F] no-underline hover:text-[var(--gwk-amber)] transition-colors"
+      <span
+        className="block text-center hidden md:block"
+        style={{ fontSize: '10px', fontWeight: 500, color: '#8A7B6F', letterSpacing: '0.3px' }}
       >
-        by Growing With Kid
-      </a>
+        <a
+          href="https://www.growingwithkid.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: 'inherit', textDecoration: 'none' }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.color = '#FBA81A'
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.color = '#8A7B6F'
+          }}
+        >
+          by Growing With Kid
+        </a>
+      </span>
     </div>
   );
 }

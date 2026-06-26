@@ -20,21 +20,21 @@ export function FeatureCards() {
     {
       title: 'Bacche ke baare mein batao',
       description:
-        'Naam, umar, aaj ki mood — bas teen sawal. Teen minute se bhi kam.',
+        'Bacche ka naam, umar, aur aaj ki mood — bas teen simple sawal. Teen minute se bhi kam lagta hai.',
       bgStyle: { background: '#C4B5FD' },
       iconSrc: '/icons/how-it-works-flower.png',
     },
     {
       title: 'Kahani tayaar hoti hai',
       description:
-        'Bolo Buddy ek nayi kahani banata hai — sirf aaj raat ke liye, sirf is bacche ke liye.',
+        'Bolo Buddy ek bilkul nayi kahani banata hai — aaj raat ke liye, sirf is bacche ke liye. Koi repeat nahi. Har raat kuch naya.',
       bgStyle: { background: '#FCD34D' },
       iconSrc: '/icons/how-it-works-star.png',
     },
     {
       title: 'Suno — aur so jao',
       description:
-        'Dadi ki awaaz jaisi — warm, calm, familiar. Bacche ki aankhein khud band ho jaati hain.',
+        'Dadi ki awaaz jaisi — warm, calm, familiar. Screen band. Aankhein band. Kahani shuru.',
       bgStyle: { background: '#5EEAD4' },
       iconSrc: '/icons/how-it-works-cloud.png',
     },
