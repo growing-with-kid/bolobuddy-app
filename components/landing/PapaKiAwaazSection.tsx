@@ -104,9 +104,12 @@ export function PapaKiAwaazSection() {
 
         {/* Body — tagline, form, link */}
         <div className="bg-white p-10 text-center">
-          <p className="text-[#8A7B6F] text-base max-w-md mx-auto mb-8">
+          <p className="text-[#8A7B6F] text-base max-w-md mx-auto mb-3">
             Record papa&apos;s voice once. Bolo Buddy tells your child a bedtime story
             in his voice — even when he&apos;s not home.
+          </p>
+          <p className="text-[13px] italic text-[#8A7B6F]/75 max-w-md mx-auto mb-8">
+            Abhi available: AI-narrated bedtime stories in your family&apos;s language.
           </p>
 
           {!submitted ? (
@@ -142,6 +145,15 @@ export function PapaKiAwaazSection() {
           {message?.type === 'error' && (
             <p className="mt-3 text-sm font-medium text-red-600">{message.text}</p>
           )}
+
+          <p className="mt-5">
+            <Link
+              href="/bolo-buddy/signup"
+              className="text-[13px] font-medium text-[#D4960A] hover:text-[#FFD166] transition-colors no-underline"
+            >
+              Try what&apos;s live now → free bedtime story
+            </Link>
+          </p>
 
           <p className="mt-6">
             <Link

@@ -18,23 +18,23 @@ export function FeatureCards() {
   const [selectedMood, setSelectedMood] = useState('bedtime-calm')
   const cards = [
     {
-      title: 'Bacche ka naam batao',
+      title: 'Bacche ke baare mein batao',
       description:
-        'Apne bacche ki umar aur mood choose karo. Teen minute mein sab ready.',
+        'Naam, umar, aaj ki mood — bas teen sawal. Teen minute se bhi kam.',
       bgStyle: { background: '#C4B5FD' },
       iconSrc: '/icons/how-it-works-flower.png',
     },
     {
       title: 'Kahani tayaar hoti hai',
       description:
-        'Bolo Buddy ek nai kahani banata hai — sirf aapke bacche ke liye, aaj raat ke liye.',
+        'Bolo Buddy ek nayi kahani banata hai — sirf aaj raat ke liye, sirf is bacche ke liye.',
       bgStyle: { background: '#FCD34D' },
       iconSrc: '/icons/how-it-works-star.png',
     },
     {
-      title: 'Suno, aur so jao',
+      title: 'Suno — aur so jao',
       description:
-        'Dadi ki awaaz jaisi — warm, calm, familiar. Bacche ki aankhein band hoti hain.',
+        'Dadi ki awaaz jaisi — warm, calm, familiar. Bacche ki aankhein khud band ho jaati hain.',
       bgStyle: { background: '#5EEAD4' },
       iconSrc: '/icons/how-it-works-cloud.png',
     },
@@ -46,19 +46,8 @@ export function FeatureCards() {
         <h2 className="font-serif text-body-charcoal text-center text-2xl font-semibold sm:text-3xl mb-2 mx-auto max-w-2xl px-4">
           How it works
         </h2>
-        <p className="text-subtext-grey text-center text-sm sm:text-base mb-4 max-w-xl mx-auto px-4">
-          Teen simple steps. Har raat.
-        </p>
-        <p
-          className="mb-8 max-w-xl mx-auto px-4"
-          style={{
-            fontSize: '14px',
-            color: '#8A7B6F',
-            lineHeight: 1.5,
-            textAlign: 'center',
-          }}
-        >
-          रात के 9 बज गए। कौन सुनाएगा story?
+        <p className="text-subtext-grey text-center text-sm sm:text-base mb-8 max-w-xl mx-auto px-4">
+          For parents, grandparents, and caregivers. Stories your child will carry into their dreams.
         </p>
         <div
           className="grid grid-cols-1 md:grid-cols-3 w-full"

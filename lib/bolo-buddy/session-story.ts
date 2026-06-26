@@ -1,5 +1,5 @@
-const STORIES_COMPLETED_KEY = 'bolo_session_stories_completed'
-const GWK_CARD_SHOWN_KEY = 'gwk_card_shown'
+const STORIES_COMPLETED_KEY = 'bb_story_count'
+const GWK_CARD_SHOWN_KEY = 'bb_gwk_card_shown'
 
 function readCount(): number {
   try {
@@ -28,7 +28,7 @@ export function incrementSessionStoriesCompleted(): number {
 
 export function hasGwkCardBeenShown(): boolean {
   try {
-    return sessionStorage.getItem(GWK_CARD_SHOWN_KEY) === '1'
+    return sessionStorage.getItem(GWK_CARD_SHOWN_KEY) === 'true'
   } catch {
     return false
   }
@@ -36,7 +36,7 @@ export function hasGwkCardBeenShown(): boolean {
 
 export function markGwkCardShown(): void {
   try {
-    sessionStorage.setItem(GWK_CARD_SHOWN_KEY, '1')
+    sessionStorage.setItem(GWK_CARD_SHOWN_KEY, 'true')
   } catch {
     // ignore
   }

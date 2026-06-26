@@ -3,69 +3,78 @@
 import { useEffect, useState } from 'react'
 import { trackEvent } from '@/lib/analytics'
 import { markGwkCardShown } from '@/lib/bolo-buddy/session-story'
-import { getDefaultGwkMemoryLibraryLink } from '@/lib/seo/internal-links'
+
+const GWK_MEMORY_LIBRARY = 'https://www.growingwithkid.com/memory-library'
 
 export default function GwkMemorySparkCard({
-  mood,
+  storyCount,
   onDismiss,
 }: {
-  mood?: string
+  storyCount: number
   onDismiss?: () => void
 }) {
-  const link = getDefaultGwkMemoryLibraryLink(mood)
   const [visible, setVisible] = useState(true)
 
   useEffect(() => {
     markGwkCardShown()
-    trackEvent('gwk_cross_promo_shown')
-  }, [])
+    trackEvent('gwk_bridge_card_shown', {
+      story_count: storyCount,
+      timestamp: Date.now(),
+    })
+  }, [storyCount])
 
   if (!visible) return null
 
   function dismiss() {
-    markGwkCardShown()
+    trackEvent('gwk_bridge_card_dismissed', {})
     setVisible(false)
     onDismiss?.()
   }
 
   function handleCtaClick() {
-    trackEvent('gwk_cross_promo_clicked')
+    trackEvent('gwk_bridge_card_clicked', { story_count: storyCount })
   }
 
   return (
     <div
-      className="relative mt-4 rounded-2xl p-4 pl-5"
+      className="relative"
       style={{
         backgroundColor: '#FFF3D6',
         borderLeft: '3px solid #FBA81A',
+        borderRadius: '0 12px 12px 0',
+        padding: '16px 20px',
+        marginTop: '16px',
       }}
     >
       <button
         type="button"
         onClick={dismiss}
-        className="absolute top-3 right-3 text-lg leading-none text-gray-600 hover:text-gray-900"
+        className="absolute top-3 right-3 text-lg leading-none hover:opacity-80"
+        style={{ color: '#8A7B6F' }}
         aria-label="Dismiss"
       >
         ×
       </button>
 
       <div className="flex gap-3 pr-6">
-        <span className="text-xl" aria-hidden>
+        <span className="text-[20px] leading-none" aria-hidden>
           🌱
         </span>
         <div className="min-w-0">
-          <p className="text-sm font-semibold text-gray-900">Turn this into a memory?</p>
-          <p className="mt-1 text-sm text-gray-700">
-            Growing With Kid has an activity to match tonight&apos;s story.
+          <p className="text-[14px] font-semibold text-[#2D2D2D]">
+            Turn this into a memory?
+          </p>
+          <p className="mt-1 text-[13px] text-[#8A7B6F]">
+            Growing With Kid has a quick family activity to go with tonight&apos;s story.
           </p>
           <a
-            href={link.href}
+            href={GWK_MEMORY_LIBRARY}
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleCtaClick}
-            className="mt-3 inline-block text-sm font-medium text-gray-900 hover:underline"
+            className="mt-3 inline-block rounded-[20px] bg-[#FF6B35] px-4 py-2 text-[13px] font-semibold text-white no-underline transition-colors hover:bg-[#e55c25]"
           >
-            {link.label} →
+            See tonight&apos;s activity →
           </a>
         </div>
       </div>

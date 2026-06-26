@@ -1,9 +1,9 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { NAV_LINKS, NAV_LINKS_RIGHT } from '@/lib/bolo-buddy/nav-links';
 
 const FLOATING_HERO_THRESHOLD = 400;
 
@@ -15,42 +15,20 @@ interface NavbarProps {
   pill?: boolean;
 }
 
-const NAV_LINKS = [
-  { label: 'What Bolo Does', href: '/bolo-buddy#features' },
-  { label: 'How It Works', href: '/bolo-buddy#how-it-works' },
-  { label: 'Stories', href: '/bolo-buddy#languages' },
-];
-
-const NAV_LINKS_RIGHT = [
-  { label: 'Plans', href: '/bolo-buddy#pricing' },
-  { label: 'Our Story', href: '/bolo-buddy/about' },
-];
-
 function BrandLockup({ logoColor }: { logoColor: string }) {
   return (
-    <div className={`flex items-center gap-2 ${logoColor}`}>
-      <Link href="/bolo-buddy" className="shrink-0">
-        <Image
-          src="/icons/owl-logo.svg"
-          alt="Bolo Buddy"
-          width={24}
-          height={24}
-          unoptimized
-        />
+    <div className={`flex flex-col leading-tight ${logoColor}`}>
+      <Link href="/bolo-buddy" className="font-bold text-base">
+        🌙 Bolo Buddy
       </Link>
-      <div className="flex flex-col leading-tight">
-        <Link href="/bolo-buddy" className="font-bold text-base">
-          Bolo Buddy
-        </Link>
-        <a
-          href="https://www.growingwithkid.com"
-          target="_blank"
-          rel="noopener"
-          className="hidden sm:block text-[10px] font-semibold tracking-[0.3px] text-[#8A7B6F] no-underline hover:text-[#FBA81A] transition-colors"
-        >
-          by Growing With Kid
-        </a>
-      </div>
+      <a
+        href="https://www.growingwithkid.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hidden sm:block text-[10px] font-medium tracking-[0.3px] text-[#8A7B6F] no-underline hover:text-[var(--gwk-amber)] transition-colors"
+      >
+        by Growing With Kid
+      </a>
     </div>
   );
 }
