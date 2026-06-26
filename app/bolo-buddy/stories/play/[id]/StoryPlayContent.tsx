@@ -291,7 +291,7 @@ export default function StoryPlayContent({
         {storyEnded && (
           <StoryOutro
             showGwkCard={storiesCompleted >= 3 && !hasGwkCardBeenShown()}
-            mood={mood}
+            storyCount={storiesCompleted}
           />
         )}
 

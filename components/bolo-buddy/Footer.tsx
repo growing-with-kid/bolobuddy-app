@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { GwkLogoMark } from '@/components/bolo-buddy/GwkLogoMark'
 
 const socialLinks = [
   { emoji: '📸', label: 'Instagram', href: 'https://instagram.com/growingwithkid' },
@@ -69,9 +70,10 @@ export default function BoloFooter({ variant = 'default' }: BoloFooterProps) {
                 href="https://www.growingwithkid.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#FBA81A] hover:text-[#FBA81A]/80 transition-colors"
+                className="inline-flex items-center gap-1 text-white/30 no-underline hover:text-[var(--gwk-amber)] transition-colors"
               >
-                Growing With Kid
+                <GwkLogoMark size={14} />
+                Growing with Kid
               </a>
               {' '}· Faridabad, India · Made with care by Raghvendra
             </p>
@@ -163,8 +165,9 @@ export default function BoloFooter({ variant = 'default' }: BoloFooterProps) {
           href="https://www.growingwithkid.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#FBA81A] hover:text-[#FBA81A]/80 transition-colors"
+          className="inline-flex items-center gap-1 text-white/25 no-underline hover:text-[var(--gwk-amber)] transition-colors"
         >
+          <GwkLogoMark size={14} />
           Growing with Kid
         </a>
       </p>

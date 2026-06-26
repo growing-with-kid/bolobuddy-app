@@ -177,28 +177,34 @@ export default function AboutPage() {
           <div className="max-w-[740px] mx-auto">
             <SectionLabel>The GWK Connection</SectionLabel>
             <h2 className={`${nunito.className} font-black text-[clamp(26px,4.5vw,40px)] leading-tight text-[#2D2D2D] text-center mb-10`}>
-              Part of something <span className="text-[#FBA81A]">bigger</span>
+              Part of something <span style={{ color: 'var(--gwk-amber)' }}>bigger</span>
             </h2>
-            <div className="rounded-[32px] overflow-hidden border border-[#FBA81A]/25 bg-white shadow-[0_8px_40px_rgba(251,168,26,0.12)]">
+            <div
+              className="rounded-[32px] overflow-hidden border bg-white"
+              style={{
+                borderColor: 'color-mix(in srgb, var(--gwk-amber) 25%, transparent)',
+                boxShadow: '0 8px 40px color-mix(in srgb, var(--gwk-amber) 12%, transparent)',
+              }}
+            >
               <div
                 className="flex flex-col sm:flex-row items-center gap-8 p-8 sm:p-10"
                 style={{
                   background:
-                    'linear-gradient(135deg, rgba(251,168,26,0.14) 0%, rgba(255,248,240,0.9) 55%, #FFF8F0 100%)',
+                    'linear-gradient(135deg, color-mix(in srgb, var(--gwk-amber) 14%, transparent) 0%, rgba(255,248,240,0.9) 55%, #FFF8F0 100%)',
                 }}
               >
                 <div
                   className="flex-shrink-0 w-[100px] h-[100px] sm:w-[112px] sm:h-[112px] rounded-[28px] flex items-center justify-center"
                   style={{
-                    background: 'linear-gradient(145deg, #FBA81A 0%, #e89410 100%)',
-                    boxShadow: '0 8px 32px rgba(251,168,26,0.35)',
+                    background: 'linear-gradient(145deg, var(--gwk-amber) 0%, #e89410 100%)',
+                    boxShadow: '0 8px 32px color-mix(in srgb, var(--gwk-amber) 35%, transparent)',
                   }}
                 >
                   <Image
                     src="/GWK - Logo.svg"
                     alt="Growing With Kid"
-                    width={72}
-                    height={72}
+                    width={48}
+                    height={48}
                     className="drop-shadow-sm"
                     unoptimized
                   />
@@ -206,7 +212,7 @@ export default function AboutPage() {
                 <div className="text-center sm:text-left flex-1">
                   <p className="text-[15px] sm:text-[16px] leading-relaxed text-[#2D2D2D]/75 mb-3">
                     <strong className="text-[#2D2D2D] font-semibold">Growing With Kid</strong> has helped{' '}
-                    <strong className="text-[#2D2D2D] font-semibold">12,000+ families</strong> navigate early
+                    <strong className="text-[#2D2D2D] font-semibold">3,400+ families</strong> navigate early
                     childhood with honest, Indian-first parenting — newsletters, play ideas, and a community that
                     actually gets it.
                   </p>
@@ -216,12 +222,16 @@ export default function AboutPage() {
                   </p>
                 </div>
               </div>
-              <div className="px-8 sm:px-10 py-6 border-t border-[#FBA81A]/20 bg-[#FFF8F0]/80 flex justify-center sm:justify-end">
+              <div
+                className="px-8 sm:px-10 py-6 border-t bg-[#FFF8F0]/80 flex justify-center sm:justify-end"
+                style={{ borderColor: 'color-mix(in srgb, var(--gwk-amber) 20%, transparent)' }}
+              >
                 <a
                   href="https://www.growingwithkid.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`${nunito.className} inline-flex items-center gap-2 font-extrabold text-[15px] text-[#2D2D2D] no-underline rounded-full px-6 py-3 border-2 border-[#FBA81A] bg-white hover:bg-[#FBA81A]/10 transition-colors`}
+                  className={`${nunito.className} inline-flex items-center gap-2 font-extrabold text-[15px] text-[#2D2D2D] no-underline rounded-full px-6 py-3 border-2 bg-white hover:bg-[color:color-mix(in_srgb,var(--gwk-amber)_10%,white)] transition-colors`}
+                  style={{ borderColor: 'var(--gwk-amber)' }}
                 >
                   Explore GWK
                   <span aria-hidden>→</span>

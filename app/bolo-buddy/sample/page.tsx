@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import Navbar from '@/components/bolo-buddy/Navbar'
 import BoloFooter from '@/components/bolo-buddy/Footer'
 import { SAMPLE_STORIES, type SampleStoryId } from '@/lib/sample-stories'
 
@@ -38,6 +39,7 @@ export default function SampleSelectPage() {
 
   return (
     <div className="relative min-h-screen bg-[#FFF8F0] font-[var(--font-dm-sans)]">
+      <Navbar variant="light" pill />
       {/* Decorative stars */}
       <span
         className="absolute right-8 top-12 text-[#FF5C1A] opacity-[0.15]"
@@ -61,7 +63,7 @@ export default function SampleSelectPage() {
         ✦
       </span>
 
-      <div className="relative z-10 mx-auto max-w-2xl px-4 py-8">
+      <div className="relative z-10 mx-auto max-w-2xl px-4 pb-8 pt-[104px]">
         <Link
           href="/bolo-buddy"
           className="mb-6 inline-block text-sm font-medium text-[#7A6A5A] hover:text-[#1A1A2E]"
@@ -174,6 +176,53 @@ export default function SampleSelectPage() {
               </Link>
             )
           })}
+        </div>
+
+        <div className="mt-10">
+          <p
+            className="mb-4 text-center text-xs font-semibold uppercase tracking-wide text-[#8A7B6F]"
+            style={{ fontFamily: 'var(--font-dm-sans)' }}
+          >
+            More for tonight
+          </p>
+          <div
+            className="mx-auto flex max-w-[600px] gap-3"
+            style={{
+              backgroundColor: 'var(--gwk-amber-light)',
+              borderLeft: '3px solid var(--gwk-amber)',
+              borderRadius: '0 12px 12px 0',
+              padding: '20px 24px',
+              margin: '40px auto',
+            }}
+          >
+            <span className="text-[20px] leading-none" aria-hidden>
+              🌱
+            </span>
+            <div className="min-w-0">
+              <h2
+                className="text-base font-bold text-[#1A1A2E]"
+                style={{ fontFamily: 'var(--font-playfair-display)' }}
+              >
+                Before the story — a family activity
+              </h2>
+              <p
+                className="mt-1.5 text-sm leading-relaxed text-[#5C534A]"
+                style={{ fontFamily: 'var(--font-dm-sans)' }}
+              >
+                Growing With Kid has free activities that make bedtime more than just a story.
+                No prep. No cost.
+              </p>
+              <a
+                href="https://www.growingwithkid.com/memory-library"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-block rounded-[20px] bg-[var(--gwk-amber)] px-[18px] py-2 text-[13px] font-semibold text-white no-underline transition-colors hover:bg-[#e89410]"
+                style={{ fontFamily: 'var(--font-dm-sans)' }}
+              >
+                Explore free activities →
+              </a>
+            </div>
+          </div>
         </div>
       </div>
       <BoloFooter />

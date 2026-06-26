@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
+import { GwkLogoMark } from '@/components/bolo-buddy/GwkLogoMark'
 
 const PARALLAX_FACTOR = 0.3
 
@@ -111,21 +112,14 @@ export function Hero({ sampleHref, signupHref }: HeroProps) {
           className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 mb-4"
           style={{
             background: '#FFF8F0',
-            border: '1px solid #FBA81A',
+            border: '1px solid var(--gwk-amber)',
             color: '#7A4800',
             fontSize: '11px',
             fontWeight: 600,
             letterSpacing: '0.5px',
           }}
         >
-          <Image
-            src="/GWK - Logo.svg"
-            alt=""
-            width={14}
-            height={14}
-            unoptimized
-            aria-hidden
-          />
+          <GwkLogoMark size={14} />
           by Growing With Kid
         </div>
         <h1
@@ -149,7 +143,7 @@ export function Hero({ sampleHref, signupHref }: HeroProps) {
               href={signupHref ?? sampleHref}
               className="inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 bg-[#FF6B35] text-white font-bold text-base rounded-[100px] min-h-[56px] shadow-[0_8px_32px_rgba(255,107,53,0.35)] hover:bg-[#e55c25] hover:shadow-[0_12px_40px_rgba(255,107,53,0.45)] active:scale-95 transition-all duration-200"
             >
-              Start tonight — it's free →
+              Try a free story →
             </Link>
           </div>
             <p
@@ -158,9 +152,10 @@ export function Hero({ sampleHref, signupHref }: HeroProps) {
                 color: '#8A7B6F',
                 fontStyle: 'italic',
                 marginTop: '12px',
+                textAlign: 'center',
               }}
             >
-              आज रात की कहानी — सिर्फ आपके बच्चे के लिए।
+              Aaj raat ki kahani — sirf aapke bacche ke liye.
             </p>
           </>
         ) : (

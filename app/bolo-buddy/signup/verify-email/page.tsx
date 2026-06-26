@@ -1,28 +1,37 @@
-'use client';
+'use client'
 
-import { Suspense, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
-import Navbar from '@/components/bolo-buddy/Navbar';
+import Link from 'next/link'
+import { Suspense, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import Navbar from '@/components/bolo-buddy/Navbar'
 
 function VerifyEmailContent() {
-  const searchParams = useSearchParams();
-  const email = searchParams.get('email');
-  const [newsletterOptIn, setNewsletterOptIn] = useState(false);
-  const [newsletterDone, setNewsletterDone] = useState(false);
+  const searchParams = useSearchParams()
+  const email = searchParams.get('email')
+  const [newsletterOptIn, setNewsletterOptIn] = useState(false)
+  const [newsletterDone, setNewsletterDone] = useState(false)
 
   async function handleNewsletterOptIn(checked: boolean) {
-    setNewsletterOptIn(checked);
-    if (!checked || !email || newsletterDone) return;
+    setNewsletterOptIn(checked)
+    if (!checked || !email || newsletterDone) return
 
     try {
       const res = await fetch('/api/newsletter/beehiiv', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
-      });
-      if (res.ok) setNewsletterDone(true);
-    } catch {
-      // Signup already succeeded — don't block or alarm the user
+      })
+      if (res.ok) {
+        setNewsletterDone(true)
+      } else {
+        console.error(
+          'GWK newsletter opt-in failed:',
+          res.status,
+          await res.text().catch(() => '')
+        )
+      }
+    } catch (err) {
+      console.error('GWK newsletter opt-in failed:', err)
     }
   }
 
@@ -44,26 +53,41 @@ function VerifyEmailContent() {
       </p>
 
       {email && (
-        <label className="flex items-start gap-3 max-w-sm text-left cursor-pointer group">
-          <input
-            type="checkbox"
-            checked={newsletterOptIn}
-            onChange={(e) => handleNewsletterOptIn(e.target.checked)}
-            className="mt-1 h-4 w-4 shrink-0 rounded border-[#2D2D2D]/20 text-[#7B2FBE] focus:ring-[#7B2FBE]"
-          />
-          <span className="text-[#8A7B6F] text-sm leading-snug group-hover:text-[#2D2D2D]/80 transition-colors">
-            Also subscribe to the GWK newsletter — honest parenting stories from
-            Raghvendra&apos;s table, every week. Free.
-            {newsletterDone && (
-              <span className="block text-[#7B2FBE] text-xs font-semibold mt-1">
-                You&apos;re on the list!
+        <div
+          className="mb-6 w-full max-w-sm text-left"
+          style={{
+            backgroundColor: '#FFF3D6',
+            border: '1px solid #FFD985',
+            borderRadius: '12px',
+            padding: '16px',
+          }}
+        >
+          <label className="flex cursor-pointer items-start gap-3">
+            <input
+              type="checkbox"
+              checked={newsletterOptIn}
+              onChange={(e) => handleNewsletterOptIn(e.target.checked)}
+              className="mt-0.5 h-4 w-4 shrink-0 rounded border-[#2D2D2D]/20 text-[#7B2FBE] focus:ring-[#7B2FBE]"
+            />
+            <span className="text-sm leading-snug text-[#5C534A]">
+              <span className="mr-1 inline-block text-[16px] align-middle" aria-hidden>
+                🌱
               </span>
-            )}
-          </span>
-        </label>
+              Also get the GWK newsletter — honest parenting stories, free activities, and
+              real moments from Indian families. One email a week. No spam.
+            </span>
+          </label>
+        </div>
       )}
+
+      <Link
+        href="/bolo-buddy/sample"
+        className="inline-flex min-h-[48px] items-center justify-center rounded-[100px] bg-[#FF6B35] px-8 py-3 text-base font-bold text-white no-underline shadow-[0_8px_32px_rgba(255,107,53,0.25)] transition-all hover:bg-[#e55c25] active:scale-[0.98]"
+      >
+        Start your story
+      </Link>
     </main>
-  );
+  )
 }
 
 export default function VerifyEmailPage() {
@@ -74,5 +98,5 @@ export default function VerifyEmailPage() {
         <VerifyEmailContent />
       </Suspense>
     </div>
-  );
+  )
 }

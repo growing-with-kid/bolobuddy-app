@@ -13,6 +13,8 @@
   --body-charcoal: #1a1a1a;
   --subtext-grey: #666666;
   --founder-coral: #e07a5f;
+  --gwk-amber: #FBA81A;
+  --gwk-amber-light: #FFF3D6;
 }
 
 @theme inline {
@@ -30,6 +32,8 @@
   --color-body-charcoal: var(--body-charcoal);
   --color-subtext-grey: var(--subtext-grey);
   --color-founder-coral: var(--founder-coral);
+  --color-gwk-amber: var(--gwk-amber);
+  --color-gwk-amber-light: var(--gwk-amber-light);
   --animate-float: float 3.5s ease-in-out infinite;
   --animate-twinkle: twinkle 2.5s ease-in-out infinite;
 }
@@ -49,6 +53,21 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* GWK brand bridge — logomark tint via mask (uses --gwk-amber) */
+.gwk-logo-mark {
+  display: inline-block;
+  flex-shrink: 0;
+  background-color: var(--gwk-amber);
+  mask-image: url('/GWK%20-%20Logo.svg');
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-image: url('/GWK%20-%20Logo.svg');
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
 }
 
 @keyframes twinkle {

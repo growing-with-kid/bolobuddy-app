@@ -18,20 +18,23 @@ export function FeatureCards() {
   const [selectedMood, setSelectedMood] = useState('bedtime-calm')
   const cards = [
     {
-      title: 'Apni awaaz record karo',
-      description: 'Phone uthao aur 2 minute bolte raho — koi bhi topic. Studio nahi chahiye. Ghar ka normal sound bilkul theek hai.',
+      title: 'Bacche ke baare mein batao',
+      description:
+        'Naam, umar, aaj ki mood — bas teen sawal. Teen minute se bhi kam.',
       bgStyle: { background: '#C4B5FD' },
       iconSrc: '/icons/how-it-works-flower.png',
     },
     {
-      title: 'Bolo Buddy seekhta hai',
-      description: 'Humara AI tumhari awaaz ka andaz, ruk-ruk ke bolna, aur warmth capture karta hai. Automatic — koi extra step nahi.',
+      title: 'Kahani tayaar hoti hai',
+      description:
+        'Bolo Buddy ek nayi kahani banata hai — sirf aaj raat ke liye, sirf is bacche ke liye.',
       bgStyle: { background: '#FCD34D' },
       iconSrc: '/icons/how-it-works-star.png',
     },
     {
-      title: 'Har raat — tumhari awaaz',
-      description: 'Bacche ka naam lekar, nai kahani, tumhari hi awaaz mein. Chahe tum ghar ho ya door — awaaz wahan hogi.',
+      title: 'Suno — aur so jao',
+      description:
+        'Dadi ki awaaz jaisi — warm, calm, familiar. Bacche ki aankhein khud band ho jaati hain.',
       bgStyle: { background: '#5EEAD4' },
       iconSrc: '/icons/how-it-works-cloud.png',
     },
@@ -43,19 +46,8 @@ export function FeatureCards() {
         <h2 className="font-serif text-body-charcoal text-center text-2xl font-semibold sm:text-3xl mb-2 mx-auto max-w-2xl px-4">
           How it works
         </h2>
-        <p className="text-subtext-grey text-center text-sm sm:text-base mb-4 max-w-xl mx-auto px-4">
+        <p className="text-subtext-grey text-center text-sm sm:text-base mb-8 max-w-xl mx-auto px-4">
           For parents, grandparents, and caregivers. Stories your child will carry into their dreams.
-        </p>
-        <p
-          className="mb-8 max-w-xl mx-auto px-4"
-          style={{
-            fontSize: '14px',
-            color: '#8A7B6F',
-            lineHeight: 1.5,
-            textAlign: 'center',
-          }}
-        >
-          रात के 9 बज गए। कौन सुनाएगा story?
         </p>
         <div
           className="grid grid-cols-1 md:grid-cols-3 w-full"

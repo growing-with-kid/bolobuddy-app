@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { NAV_LINKS, NAV_LINKS_RIGHT, NAV_LINKS_ALL } from '@/lib/bolo-buddy/nav-links';
 
 // ─────────────────────────────────────────────────────────
 // BoloNav — shared navigation bar for all Bolo Buddy pages
@@ -43,9 +44,14 @@ export function BoloNav({ variant = 'default', flushTop = false, centerLogo = fa
   const isAbout = pathname === '/bolo-buddy/about';
   const isPapa  = pathname === '/bolo-buddy/papa-ki-awaaz';
   const isHome = pathname === '/bolo-buddy' || pathname === '/bolo-buddy/';
-  const isFeaturesActive = isHome && (hash === '' || hash === 'features');
-  const isLanguagesActive = isHome && hash === 'languages';
-  const isPricingActive = isHome && hash === 'pricing';
+  const isLinkActive = (href: string) => {
+    if (href === '/bolo-buddy/about') return isAbout;
+    if (!isHome) return false;
+    const anchor = href.split('#')[1];
+    if (!anchor) return false;
+    if (anchor === 'features') return hash === '' || hash === 'features';
+    return hash === anchor;
+  };
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -146,8 +152,11 @@ export function BoloNav({ variant = 'default', flushTop = false, centerLogo = fa
             {/* Desktop: left links | center logo | right links */}
             {/* Mobile: logo left, hamburger right (logo left-aligned to avoid nav pushed off-screen) */}
             <div className="hidden md:flex items-center gap-8">
-              <Link href="/bolo-buddy#features"  className={getLinkClass(isFeaturesActive)}>Features</Link>
-              <Link href="/bolo-buddy#languages" className={getLinkClass(isLanguagesActive)}>Languages</Link>
+              {NAV_LINKS.map((link) => (
+                <Link key={link.href} href={link.href} className={getLinkClass(isLinkActive(link.href))}>
+                  {link.label}
+                </Link>
+              ))}
             </div>
             {/* Mobile: logo left. Desktop: logo centered absolutely */}
             <div className={`flex-shrink-0 md:flex-1 flex justify-center md:justify-center ${logoDropShadow} md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:pointer-events-none`}>
@@ -167,8 +176,11 @@ export function BoloNav({ variant = 'default', flushTop = false, centerLogo = fa
             <div className="flex-1 min-w-0 md:flex-initial md:contents" aria-hidden />
 
             <div className="hidden md:flex items-center gap-8 flex-shrink-0">
-              <Link href="/bolo-buddy#pricing"   className={getLinkClass(isPricingActive)}>Pricing</Link>
-              <Link href="/bolo-buddy/about"     className={getLinkClass(isAbout)}>About</Link>
+              {NAV_LINKS_RIGHT.map((link) => (
+                <Link key={link.href} href={link.href} className={getLinkClass(isLinkActive(link.href))}>
+                  {link.label}
+                </Link>
+              ))}
             </div>
             <button
               className="md:hidden p-2 flex flex-col gap-1.5 flex-shrink-0 min-h-[44px] min-w-[44px] items-center justify-center"
@@ -192,10 +204,11 @@ export function BoloNav({ variant = 'default', flushTop = false, centerLogo = fa
 
             {/* Desktop links */}
             <div className="hidden md:flex items-center gap-8">
-              <Link href="/bolo-buddy#features"   className={getLinkClass(false)}>Features</Link>
-              <Link href="/bolo-buddy#languages"  className={getLinkClass(false)}>Languages</Link>
-              <Link href="/bolo-buddy#pricing"    className={getLinkClass(false)}>Pricing</Link>
-              <Link href="/bolo-buddy/about"      className={getLinkClass(isAbout)}>About</Link>
+              {NAV_LINKS_ALL.map((link) => (
+                <Link key={link.href} href={link.href} className={getLinkClass(isLinkActive(link.href))}>
+                  {link.label}
+                </Link>
+              ))}
             </div>
 
             {/* Hamburger */}
@@ -215,10 +228,16 @@ export function BoloNav({ variant = 'default', flushTop = false, centerLogo = fa
       {/* Mobile menu */}
       {open && (
         <div className={`md:hidden ${mobileMenuBg} px-4 py-4 flex flex-col gap-4`}>
-          <Link href="/bolo-buddy#features"  onClick={() => setOpen(false)} className={getMobileLinkClass(isFeaturesActive)}>Features</Link>
-          <Link href="/bolo-buddy#languages" onClick={() => setOpen(false)} className={getMobileLinkClass(isLanguagesActive)}>Languages</Link>
-          <Link href="/bolo-buddy#pricing"   onClick={() => setOpen(false)} className={getMobileLinkClass(isPricingActive)}>Pricing</Link>
-          <Link href="/bolo-buddy/about"     onClick={() => setOpen(false)} className={getMobileLinkClass(isAbout)}>About</Link>
+          {NAV_LINKS_ALL.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setOpen(false)}
+              className={getMobileLinkClass(isLinkActive(link.href))}
+            >
+              {link.label}
+            </Link>
+          ))}
           <Link
             href="/bolo-buddy/papa-ki-awaaz"
             onClick={() => setOpen(false)}

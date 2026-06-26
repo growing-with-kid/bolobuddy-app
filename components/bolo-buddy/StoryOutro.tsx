@@ -5,10 +5,10 @@ import GwkMemorySparkCard from './GwkMemorySparkCard'
 
 type Props = {
   showGwkCard: boolean
-  mood?: string
+  storyCount: number
 }
 
-export default function StoryOutro({ showGwkCard, mood }: Props) {
+export default function StoryOutro({ showGwkCard, storyCount }: Props) {
   return (
     <section className="mt-8 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
       <p className="text-sm text-gray-600">Sweet dreams. 🌙</p>
@@ -18,7 +18,7 @@ export default function StoryOutro({ showGwkCard, mood }: Props) {
       >
         One more story?
       </Link>
-      {showGwkCard && <GwkMemorySparkCard mood={mood} />}
+      {showGwkCard && <GwkMemorySparkCard storyCount={storyCount} />}
     </section>
   )
 }

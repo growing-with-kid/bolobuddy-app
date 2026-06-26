@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { use, useEffect, useRef, useState } from 'react'
+import Navbar from '@/components/bolo-buddy/Navbar'
 import BoloFooter from '@/components/bolo-buddy/Footer'
 import { SAMPLE_STORIES, type SampleStoryId } from '@/lib/sample-stories'
 
@@ -105,6 +106,7 @@ export default function SamplePlayPage({ params }: { params: Promise<{ id: strin
 
   return (
     <div className="relative min-h-screen min-w-full w-full overflow-x-hidden bg-[#FFF8F0] font-[var(--font-dm-sans)]">
+      <Navbar variant="light" pill />
       {/* Decorative circle behind header */}
       <div
         className="absolute right-[-100px] top-[-100px] z-0 h-[300px] w-[300px] rounded-full"
