@@ -2,6 +2,7 @@ import { Nunito, Inter, Lora } from 'next/font/google'
 import Image from 'next/image'
 import Navbar from '@/components/bolo-buddy/Navbar'
 import BoloFooter from '@/components/bolo-buddy/Footer'
+import { ScreenFreePhilosophyQuote } from '@/components/landing/ScreenFreePhilosophyQuote'
 
 const nunito = Nunito({ subsets: ['latin'], weight: ['400', '600', '700', '800', '900'] })
 const inter = Inter({ subsets: ['latin'], weight: ['400', '500', '600'] })
@@ -413,6 +414,10 @@ export default function AboutPage() {
             ))}
           </div>
         </div>
+      </section>
+
+      <section className="bg-[#FFF8F0] px-6">
+        <ScreenFreePhilosophyQuote accentHindi />
       </section>
 
       {/* Testimonials */}

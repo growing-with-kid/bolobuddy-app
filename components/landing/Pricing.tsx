@@ -34,9 +34,14 @@ export function Pricing({ freeCtaHref = '/bolo-buddy/signup', premiumCtaHref = '
         </p>
         <div className="grid gap-8 sm:grid-cols-2 max-w-4xl mx-auto">
           <div className="border-2 border-[#2D2D2D]/10 rounded-[24px] p-8 bg-white flex flex-col justify-between">
-            <p className="text-body-charcoal mb-2 text-sm font-semibold uppercase tracking-wide">
-              FREE PLAN
-            </p>
+            <div className="mb-2">
+              <p className="text-body-charcoal text-sm font-semibold tracking-wide">
+                शुरुआत — मुफ़्त
+              </p>
+              <p className="text-subtext-grey text-[10px] font-semibold uppercase tracking-wide mt-0.5">
+                FREE
+              </p>
+            </div>
             <p className="text-body-charcoal mb-1 font-serif text-4xl font-bold">₹0</p>
             <p className="text-subtext-grey mb-4 text-sm">Per family, free forever</p>
             <p className="text-body-charcoal mb-2 text-sm font-semibold">Bedtime Stories:</p>

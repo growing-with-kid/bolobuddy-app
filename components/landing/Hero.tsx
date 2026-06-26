@@ -152,6 +152,16 @@ export function Hero({ sampleHref, signupHref }: HeroProps) {
               Start tonight — it's free →
             </Link>
           </div>
+            <p
+              style={{
+                fontSize: '13px',
+                color: '#8A7B6F',
+                fontStyle: 'italic',
+                marginTop: '12px',
+              }}
+            >
+              आज रात की कहानी — सिर्फ आपके बच्चे के लिए।
+            </p>
           </>
         ) : (
           <p style={{ color: '#ffffff', fontSize: '16px' }} className="mt-4 font-medium">
