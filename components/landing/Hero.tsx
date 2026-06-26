@@ -131,6 +131,9 @@ export function Hero({ sampleHref, signupHref }: HeroProps) {
         <p className="text-body-charcoal/90 text-base sm:text-lg mb-6 max-w-xl" style={{ color: 'var(--body-charcoal)', opacity: 0.9 }}>
           No animations. No algorithms. Just a voice and a story.
         </p>
+        <p className="text-sm italic mt-3 text-center" style={{ color: '#8A7B6F' }}>
+          Aaj raat ki kahani — sirf aapke bacche ke liye.
+        </p>
         {sampleHref ? (
           <>
             <div
@@ -146,17 +149,6 @@ export function Hero({ sampleHref, signupHref }: HeroProps) {
               Try a free story →
             </Link>
           </div>
-            <p
-              style={{
-                fontSize: '13px',
-                color: '#8A7B6F',
-                fontStyle: 'italic',
-                marginTop: '12px',
-                textAlign: 'center',
-              }}
-            >
-              Aaj raat ki kahani — sirf aapke bacche ke liye.
-            </p>
           </>
         ) : (
           <p style={{ color: '#ffffff', fontSize: '16px' }} className="mt-4 font-medium">
