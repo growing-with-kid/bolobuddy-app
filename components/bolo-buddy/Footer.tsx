@@ -64,7 +64,16 @@ export default function BoloFooter({ variant = 'default' }: BoloFooterProps) {
             style={{ paddingBottom: 'calc(16px + env(safe-area-inset-bottom, 0px))' }}
           >
             <p className="text-xs text-white/30">
-              © 2026 Growing With Kid · Faridabad, India · Made with care by Raghvendra
+              © 2026{' '}
+              <a
+                href="https://www.growingwithkid.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#FBA81A] hover:text-[#FBA81A]/80 transition-colors"
+              >
+                Growing With Kid
+              </a>
+              {' '}· Faridabad, India · Made with care by Raghvendra
             </p>
             <div className="flex gap-4">
               {socialLinks.slice(0, 3).map((link) => (
@@ -149,7 +158,15 @@ export default function BoloFooter({ variant = 'default' }: BoloFooterProps) {
         className="mt-5 text-[11px] text-white/25"
         style={{ fontFamily: 'var(--font-dm-sans)' }}
       >
-        © 2026 Growing with Kid
+        © 2026{' '}
+        <a
+          href="https://www.growingwithkid.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#FBA81A] hover:text-[#FBA81A]/80 transition-colors"
+        >
+          Growing with Kid
+        </a>
       </p>
     </footer>
   )

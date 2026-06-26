@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useState } from 'react'
 import { joinWaitlist, type WaitlistState } from '@/app/bolo-buddy/actions'
+import { ScreenFreePhilosophyQuote } from '@/components/landing/ScreenFreePhilosophyQuote'
 
 const initialState: WaitlistState = { message: '', type: 'error' }
 
@@ -16,6 +17,7 @@ export function WaitlistForm() {
   return (
     <section id="waitlist" className="px-4 py-16 sm:py-20">
       <div className="mx-auto max-w-xl">
+        <ScreenFreePhilosophyQuote />
         <h2 className="font-serif text-body-charcoal mb-4 text-center text-2xl font-semibold sm:text-3xl">
           We&apos;re inviting Indian families into beta one at a time.
         </h2>

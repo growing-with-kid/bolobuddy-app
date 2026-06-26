@@ -21,6 +21,7 @@ import {
 } from '@/lib/tts/elevenlabs'
 
 const FREE_STORIES_PER_MONTH = 3
+const DEFAULT_RAZORPAY_LINK = 'https://rzp.io/l/bolo-family-plan'
 const CLAUDE_MODEL = 'claude-sonnet-4-6'
 const CLAUDE_MAX_TOKENS = 1200
 
@@ -73,14 +74,8 @@ function deriveTitleFromStoryBody(text: string): string {
   return words || 'Bedtime story'
 }
 
-function getStartAndEndOfCurrentMonth(): { start: string; end: string } {
-  const now = new Date()
-  const start = new Date(now.getFullYear(), now.getMonth(), 1)
-  const end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999)
-  return { start: start.toISOString(), end: end.toISOString() }
-}
-
 export async function POST(request: Request) {
+  const razorpayLink = process.env.BOLO_RAZORPAY_LINK?.trim() || DEFAULT_RAZORPAY_LINK
   let bodyUnknown: unknown
   try {
     bodyUnknown = await request.json()
@@ -107,6 +102,7 @@ export async function POST(request: Request) {
   let supabase: Awaited<ReturnType<typeof createServerClient>> | ReturnType<typeof createSupabaseClient> | null = null
   let user: { id: string; user_metadata?: Record<string, unknown> } | null
   let plan: string | undefined
+  let storiesThisMonth = 0
 
   if (shouldPersistStory && bearerToken) {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim()
@@ -152,26 +148,32 @@ export async function POST(request: Request) {
 
   const isPremium = plan === 'premium'
 
-  if (shouldPersistStory && !isPremium) {
-    const { start, end } = getStartAndEndOfCurrentMonth()
-    const { count, error: countError } = await persistedSupabase!
-      .from('stories')
-      .select('*', { count: 'exact', head: true })
-      .eq('user_id', params.userId)
-      .gte('created_at', start)
-      .lte('created_at', end)
+  if (shouldPersistStory) {
+    const { data: countData, error: countError } = await persistedSupabase!
+      .rpc('get_monthly_story_count', { uid: user!.id })
+
     if (countError) {
       return NextResponse.json(
-        { success: false, error: 'Failed to check story limit' },
+        { success: false, error: 'Could not check usage.' },
         { status: 500 }
       )
     }
-    if ((count ?? 0) >= FREE_STORIES_PER_MONTH) {
+
+    storiesThisMonth = countData ?? 0
+  }
+
+  if (shouldPersistStory && !isPremium && storiesThisMonth >= FREE_STORIES_PER_MONTH) {
       return NextResponse.json(
-        { success: false, error: 'Monthly story limit reached (3 for free plan)' },
-        { status: 429 }
+        {
+          success: false,
+          error: 'You have used your 3 free stories for this month.',
+          code: 'LIMIT_REACHED',
+          count: storiesThisMonth,
+          limit: FREE_STORIES_PER_MONTH,
+          razorpayLink,
+        },
+        { status: 403 }
       )
-    }
   }
 
   let childName = (params.childName ?? params.child_name ?? '').trim()
@@ -398,7 +400,23 @@ function injectTTSPauses(text: string): string {
         }
       }
     }
+
+    const { error: usageError } = await persistedSupabase!.from('bolo_story_usage').insert({
+      user_id: params.userId,
+      story_id: storyId,
+      generated_at: new Date().toISOString(),
+    })
+    if (usageError) {
+      console.warn('[story-generate] Failed to write bolo_story_usage:', usageError.message)
+    }
   }
+
+  const newCount = shouldPersistStory ? storiesThisMonth + 1 : undefined
+  const isLastFree = Boolean(
+    shouldPersistStory &&
+      !isPremium &&
+      newCount === FREE_STORIES_PER_MONTH
+  )
 
   return NextResponse.json({
     success: true,
@@ -407,5 +425,9 @@ function injectTTSPauses(text: string): string {
     storyText: textContent,
     title,
     speaker: voiceKey,
+    count: newCount,
+    limit: FREE_STORIES_PER_MONTH,
+    isLastFree,
+    razorpayLink,
   })
 }

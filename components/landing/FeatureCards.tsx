@@ -43,8 +43,19 @@ export function FeatureCards() {
         <h2 className="font-serif text-body-charcoal text-center text-2xl font-semibold sm:text-3xl mb-2 mx-auto max-w-2xl px-4">
           How it works
         </h2>
-        <p className="text-subtext-grey text-center text-sm sm:text-base mb-8 max-w-xl mx-auto px-4">
+        <p className="text-subtext-grey text-center text-sm sm:text-base mb-4 max-w-xl mx-auto px-4">
           For parents, grandparents, and caregivers. Stories your child will carry into their dreams.
+        </p>
+        <p
+          className="mb-8 max-w-xl mx-auto px-4"
+          style={{
+            fontSize: '14px',
+            color: '#8A7B6F',
+            lineHeight: 1.5,
+            textAlign: 'center',
+          }}
+        >
+          रात के 9 बज गए। कौन सुनाएगा story?
         </p>
         <div
           className="grid grid-cols-1 md:grid-cols-3 w-full"

@@ -110,7 +110,7 @@ export function SampleStories() {
     >
       <div className="relative z-10 max-w-2xl mx-auto">
         <h2 className="font-serif text-body-charcoal mb-2 text-center text-2xl font-semibold sm:text-3xl">
-          Listen to Sample Stories
+          सुनिए — अपने बच्चे के लिए
         </h2>
         <p className="text-subtext-grey mb-10 text-center text-sm sm:text-base">
           Stories rooted in your family&apos;s world. Hear the kind of calm, gentle stories your child will drift off to—before you sign up for anything.

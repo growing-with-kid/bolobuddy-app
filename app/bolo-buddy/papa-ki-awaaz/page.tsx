@@ -11,9 +11,15 @@ const inter = Inter({ subsets: ['latin'], weight: ['400', '500', '600'] })
 const lora = Lora({ subsets: ['latin'], weight: ['400', '600'], style: ['normal', 'italic'] })
 
 export const metadata = {
-  title: 'Papa Ki Awaaz — Bolo Buddy',
+  title: "Papa Ki Awaaz — Father's Voice at Bedtime | Bolo Buddy",
   description:
-    'Ek baar apni awaaz record karo. Bolo Buddy tumhare bacche ko roz raat tumhari hi awaaz mein kahani sunayega — chahe tum ghar ho ya nahi.',
+    'Papa ki awaaz — record once, and Bolo Buddy reads bedtime stories in your voice every night. For Indian working parents who cannot always be home by 9pm.',
+  keywords: [
+    'Papa ki awaaz',
+    "father's voice bedtime stories",
+    'bedtime routine Indian working parents',
+    'voice bedtime stories India',
+  ],
 }
 
 const waveformBars = [

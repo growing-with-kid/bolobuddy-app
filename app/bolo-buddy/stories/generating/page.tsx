@@ -26,6 +26,7 @@ function GeneratingContent() {
   const storyId = searchParams.get('storyId')
   const language = searchParams.get('language') ?? 'english'
   const mood = searchParams.get('mood') ?? 'bedtime'
+  const gate = searchParams.get('gate') ?? ''
 
   const [phase, setPhase] = useState<'loading' | 'polling' | 'completed' | 'failed'>('loading')
   const [phraseIndex, setPhraseIndex] = useState(0)
@@ -105,11 +106,11 @@ function GeneratingContent() {
       }
       setProgress(100)
       router.replace(
-        `/bolo-buddy/stories/play/${storyId}?language=${encodeURIComponent(language)}&mood=${encodeURIComponent(mood)}`
+        `/bolo-buddy/stories/play/${storyId}?language=${encodeURIComponent(language)}&mood=${encodeURIComponent(mood)}&gate=${encodeURIComponent(gate)}`
       )
       return
     }
-  }, [phase, storyId, language, mood, router])
+  }, [phase, storyId, language, mood, gate, router])
 
   useEffect(() => {
     if (phase === 'failed' || phase === 'completed') return

@@ -43,13 +43,31 @@ export function Nav({ onOpenModal, variant = 'light' }: NavProps) {
         </div>
 
         {/* Right links */}
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-6 sm:gap-8">
           <Link href="#pricing" className={linkClass}>
             Pricing
           </Link>
           <Link href="/bolo-buddy/about" className={linkClass}>
             About
           </Link>
+          <Link href="/bolo" className={linkClass}>
+            Bolo Buddy
+          </Link>
+          <a
+            href="https://www.bolobuddy.in/bolo-buddy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center no-underline text-white"
+            style={{
+              backgroundColor: '#FF6B35',
+              fontSize: '13px',
+              fontWeight: 600,
+              padding: '8px 16px',
+              borderRadius: '100px',
+            }}
+          >
+            🌙 Try Bolo Buddy
+          </a>
         </div>
       </div>
     </nav>
