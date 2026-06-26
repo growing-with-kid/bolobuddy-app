@@ -96,11 +96,43 @@ export function Hero({ sampleHref, signupHref }: HeroProps) {
         }`}
         style={{ transitionDuration: '0.6s' }}
       >
+        <div className="mb-3 animate-[float_4s_ease-in-out_infinite] motion-reduce:animate-none">
+          <Image
+            src="/icons/owl-logo.svg"
+            alt="Bolo Buddy"
+            width={80}
+            height={80}
+            priority
+            unoptimized
+            className="w-16 h-16 sm:w-20 sm:h-20"
+          />
+        </div>
+        <div
+          className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 mb-4"
+          style={{
+            background: '#FFF8F0',
+            border: '1px solid #FBA81A',
+            color: '#7A4800',
+            fontSize: '11px',
+            fontWeight: 600,
+            letterSpacing: '0.5px',
+          }}
+        >
+          <Image
+            src="/GWK - Logo.svg"
+            alt=""
+            width={14}
+            height={14}
+            unoptimized
+            aria-hidden
+          />
+          by Growing With Kid
+        </div>
         <h1
           className="font-serif text-body-charcoal mb-4 text-[clamp(1.5rem,5vw,2.75rem)] leading-tight sm:mb-6 sm:text-4xl md:text-5xl break-words"
           style={{ color: 'var(--body-charcoal)' }}
         >
-          Be there at bedtime, even when you can&apos;t be.
+          A voice. A story. Bedtime, together.
         </h1>
         <p className="text-body-charcoal/90 text-base sm:text-lg mb-6 max-w-xl" style={{ color: 'var(--body-charcoal)', opacity: 0.9 }}>
           No animations. No algorithms. Just a voice and a story.
