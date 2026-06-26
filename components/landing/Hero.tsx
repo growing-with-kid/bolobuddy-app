@@ -149,7 +149,7 @@ export function Hero({ sampleHref, signupHref }: HeroProps) {
               href={signupHref ?? sampleHref}
               className="inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 bg-[#FF6B35] text-white font-bold text-base rounded-[100px] min-h-[56px] shadow-[0_8px_32px_rgba(255,107,53,0.35)] hover:bg-[#e55c25] hover:shadow-[0_12px_40px_rgba(255,107,53,0.45)] active:scale-95 transition-all duration-200"
             >
-              Try a free story →
+              Start tonight — it's free →
             </Link>
           </div>
           </>

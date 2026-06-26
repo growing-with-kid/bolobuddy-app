@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
@@ -15,15 +16,44 @@ interface NavbarProps {
 }
 
 const NAV_LINKS = [
-  { label: 'Features', href: '/bolo-buddy#features' },
-  { label: 'How it works', href: '/bolo-buddy#how-it-works' },
-  { label: 'Languages', href: '/bolo-buddy#languages' },
+  { label: 'What Bolo Does', href: '/bolo-buddy#features' },
+  { label: 'How It Works', href: '/bolo-buddy#how-it-works' },
+  { label: 'Stories', href: '/bolo-buddy#languages' },
 ];
 
 const NAV_LINKS_RIGHT = [
-  { label: 'Pricing', href: '/bolo-buddy#pricing' },
-  { label: 'About', href: '/bolo-buddy/about' },
+  { label: 'Plans', href: '/bolo-buddy#pricing' },
+  { label: 'Our Story', href: '/bolo-buddy/about' },
 ];
+
+function BrandLockup({ logoColor }: { logoColor: string }) {
+  return (
+    <div className={`flex items-center gap-2 ${logoColor}`}>
+      <Link href="/bolo-buddy" className="shrink-0">
+        <Image
+          src="/icons/owl-logo.svg"
+          alt="Bolo Buddy"
+          width={24}
+          height={24}
+          unoptimized
+        />
+      </Link>
+      <div className="flex flex-col leading-tight">
+        <Link href="/bolo-buddy" className="font-bold text-base">
+          Bolo Buddy
+        </Link>
+        <a
+          href="https://www.growingwithkid.com"
+          target="_blank"
+          rel="noopener"
+          className="hidden sm:block text-[10px] font-semibold tracking-[0.3px] text-[#8A7B6F] no-underline hover:text-[#FBA81A] transition-colors"
+        >
+          by Growing With Kid
+        </a>
+      </div>
+    </div>
+  );
+}
 
 export default function Navbar({ variant = 'light', floating = false, pill = false }: NavbarProps) {
   const pathname = usePathname();
@@ -90,22 +120,12 @@ export default function Navbar({ variant = 'light', floating = false, pill = fal
 
         {/* Mobile: left-aligned logo */}
         <div className="md:hidden">
-          <Link href="/bolo-buddy" className={`flex items-center gap-2 ${logoColor}`}>
-            <span className="text-2xl">🌙</span>
-            <span className="font-extrabold text-base">
-              Bolo Buddy
-            </span>
-          </Link>
+          <BrandLockup logoColor={logoColor} />
         </div>
 
         {/* Centre logo — desktop only */}
         <div className="hidden md:block absolute left-1/2 -translate-x-1/2">
-          <Link href="/bolo-buddy" className={`flex items-center gap-2 ${logoColor}`}>
-            <span className="text-2xl">🌙</span>
-            <span className="font-extrabold text-base">
-              Bolo Buddy
-            </span>
-          </Link>
+          <BrandLockup logoColor={logoColor} />
         </div>
 
         {/* Right nav links — desktop */}
