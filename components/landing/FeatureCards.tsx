@@ -18,20 +18,23 @@ export function FeatureCards() {
   const [selectedMood, setSelectedMood] = useState('bedtime-calm')
   const cards = [
     {
-      title: 'Apni awaaz record karo',
-      description: 'Phone uthao aur 2 minute bolte raho — koi bhi topic. Studio nahi chahiye. Ghar ka normal sound bilkul theek hai.',
+      title: 'Bacche ka naam batao',
+      description:
+        'Apne bacche ki umar aur mood choose karo. Teen minute mein sab ready.',
       bgStyle: { background: '#C4B5FD' },
       iconSrc: '/icons/how-it-works-flower.png',
     },
     {
-      title: 'Bolo Buddy seekhta hai',
-      description: 'Humara AI tumhari awaaz ka andaz, ruk-ruk ke bolna, aur warmth capture karta hai. Automatic — koi extra step nahi.',
+      title: 'Kahani tayaar hoti hai',
+      description:
+        'Bolo Buddy ek nai kahani banata hai — sirf aapke bacche ke liye, aaj raat ke liye.',
       bgStyle: { background: '#FCD34D' },
       iconSrc: '/icons/how-it-works-star.png',
     },
     {
-      title: 'Har raat — tumhari awaaz',
-      description: 'Bacche ka naam lekar, nai kahani, tumhari hi awaaz mein. Chahe tum ghar ho ya door — awaaz wahan hogi.',
+      title: 'Suno, aur so jao',
+      description:
+        'Dadi ki awaaz jaisi — warm, calm, familiar. Bacche ki aankhein band hoti hain.',
       bgStyle: { background: '#5EEAD4' },
       iconSrc: '/icons/how-it-works-cloud.png',
     },
@@ -44,7 +47,7 @@ export function FeatureCards() {
           How it works
         </h2>
         <p className="text-subtext-grey text-center text-sm sm:text-base mb-4 max-w-xl mx-auto px-4">
-          For parents, grandparents, and caregivers. Stories your child will carry into their dreams.
+          Teen simple steps. Har raat.
         </p>
         <p
           className="mb-8 max-w-xl mx-auto px-4"
